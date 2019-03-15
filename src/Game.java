@@ -8,7 +8,7 @@ public class Game extends JFrame {
 	public Game() {
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 800, 600);
+		setBounds(0, 0, 800, 600); ////////////the location and the size of the program
 		setResizable(false);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -17,8 +17,8 @@ public class Game extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
 		getContentPane().add(new Paint());
-		panel.setLayout(new GridLayout(10, 10, 10, 10));
-		JButton start = new JButton("Start");
+		panel.setLayout(new GridLayout(10, 10, 10, 10));/////////////the distance between buttons
+		JButton start = new JButton("Start");  ///////////////////all button starts here
 		JButton pause = new JButton("Pause");
 		JButton login = new JButton("LogIn");
 		JButton register = new JButton("Register");

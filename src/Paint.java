@@ -11,14 +11,14 @@ public class Paint extends JPanel {
 	}
 
 	private int x(int row) {
-		return Xalign+row * cellWidth;
+		return Xalign+row * cellWidth;//////////////x location of a cell
 	}
 
 	private int y(int col) {
-		return Yalign+col * cellHeight;
+		return Yalign+col * cellHeight;//////////////////y location of a cell
 	}
 
-	public void paintComponent(Graphics graphic) {
+	public void paintComponent(Graphics graphic) {//////////draw whole things, not complete
 		Grid grid = new Grid();
 		super.paintComponent(graphic);
 		Cell[] cells = grid.getCells();
