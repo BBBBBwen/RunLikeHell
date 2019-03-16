@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -22,6 +23,8 @@ public class Game extends JFrame {
 		JButton pause = new JButton("Pause");
 		JButton login = new JButton("LogIn");
 		JButton register = new JButton("Register");
+		login.addActionListener(new MyActionListener());
+		register.addActionListener(new MyActionListener());
 		JLabel time = new JLabel("Time Unit:");
 		panel.add(start);
 		panel.add(pause);
@@ -29,9 +32,81 @@ public class Game extends JFrame {
 		panel.add(register);
 		panel.add(time);
 	}
-
 	public static void main(String args[]) throws Exception {
 		Game frame = new Game();
 		frame.setVisible(true);
+	}
+}
+class MyActionListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+		String label = ((JButton)e.getSource()).getLabel();
+		if("LogIn".equals(label)) {
+			new Login();
+		}
+		if(label.equals("Register")) {
+			new Register();
+		}
+	}
+}
+class Login extends JFrame {
+	public Login() {
+		setTitle("Login");
+		JLabel label1 = new JLabel("UserName");
+		label1.setBounds(10,10,200,18);
+		JLabel label2 = new JLabel("Password");
+		label2.setBounds(10,50,200,18);
+		JTextField textField1 = new JTextField();
+		textField1.setBounds(90,10,150,18);
+		JTextField textField2 = new JTextField();
+		textField2.setBounds(90,50,150,18);
+		JButton button1 = new JButton("Confirm");
+		button1.setBounds(40,80,100,18);
+		JButton button2 = new JButton("Cancel");
+		button2.setBounds(150,80,100,18);
+		Container container =getContentPane();
+		container.setLayout(null);
+		container.add(label1);
+		container.add(label2);
+		container.add(textField1);
+		container.add(textField2);
+		container.add(button1);
+		container.add(button2);
+		setBounds(0,0,300,150);
+		setAlwaysOnTop(true);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
+	}
+}
+class Register extends JFrame {
+	public Register() {
+		setTitle("Login");
+		JLabel label1 = new JLabel("UserName");
+		label1.setBounds(10,10,200,18);
+		JLabel label2 = new JLabel("Password");
+		label2.setBounds(10,50,200,18);
+		JTextField textField1 = new JTextField();
+		textField1.setBounds(90,10,150,18);
+		JTextField textField2 = new JTextField();
+		textField2.setBounds(90,50,150,18);
+		JButton button1 = new JButton("Confirm");
+		button1.setBounds(40,80,100,18);
+		JButton button2 = new JButton("Cancel");
+		button2.setBounds(150,80,100,18);
+		Container container =getContentPane();
+		container.setLayout(null);
+		container.add(label1);
+		container.add(label2);
+		container.add(textField1);
+		container.add(textField2);
+		container.add(button1);
+		container.add(button2);
+		setBounds(0,0,300,150);
+		setAlwaysOnTop(true);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
 	}
 }
