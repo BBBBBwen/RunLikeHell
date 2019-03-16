@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -39,8 +41,8 @@ public class Game extends JFrame {
 }
 class MyActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-		String label = ((JButton)e.getSource()).getLabel();
-		if("LogIn".equals(label)) {
+		String label = e.getActionCommand();
+		if(label.equals("LogIn")) {
 			new Login();
 		}
 		if(label.equals("Register")) {
@@ -48,7 +50,9 @@ class MyActionListener implements ActionListener {
 		}
 	}
 }
+
 class Login extends JFrame {
+	User user;
 	public Login() {
 		setTitle("Login");
 		JLabel label1 = new JLabel("UserName");
@@ -60,8 +64,25 @@ class Login extends JFrame {
 		JTextField textField2 = new JTextField();
 		textField2.setBounds(90,50,150,18);
 		JButton button1 = new JButton("Confirm");
+		button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserData userData = new UserData();
+				boolean flag = userData.isLogin(textField1.getText(),textField2.getText());
+					if(flag) {
+					JOptionPane.showMessageDialog(button1, "Sucsuss");
+					dispose();
+					}else {
+						JOptionPane.showMessageDialog(button1, "fail");
+					}
+			}
+		});
 		button1.setBounds(40,80,100,18);
 		JButton button2 = new JButton("Cancel");
+		button2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		button2.setBounds(150,80,100,18);
 		Container container =getContentPane();
 		container.setLayout(null);
@@ -91,8 +112,22 @@ class Register extends JFrame {
 		JTextField textField2 = new JTextField();
 		textField2.setBounds(90,50,150,18);
 		JButton button1 = new JButton("Confirm");
+		button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserData userData = new UserData();
+				User user = new User(textField1.getText(),textField2.getText());
+					userData.register(user);
+					JOptionPane.showMessageDialog(button1, "Sucsuss");
+					dispose();
+			}
+		});
 		button1.setBounds(40,80,100,18);
 		JButton button2 = new JButton("Cancel");
+		button2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		button2.setBounds(150,80,100,18);
 		Container container =getContentPane();
 		container.setLayout(null);
