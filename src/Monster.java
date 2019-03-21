@@ -1,4 +1,3 @@
-package 游戏练习;
 
 import java.awt.Graphics2D;
 
