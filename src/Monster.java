@@ -1,10 +1,11 @@
 
 public class Monster {
-	private char keypress;
-	private boolean pressed;
+
+	private boolean hidden;
 	private int y;
 	private int x;
 	private int Mspeed;
+
 
 	public Monster(int initialX, int initialY, int initialMspeed) {
 		x = initialX;
@@ -13,19 +14,9 @@ public class Monster {
 	}
 
 	public void action() {
-		if (keypress == 'L' && pressed) {
-			moveLeft(1);
+		
 		}
-		if (keypress == 'R' && pressed) {
-			moveRight(1);
-		}
-		if (keypress == 'U' && pressed) {
-			moveUp(1);
-		}
-		if (keypress == 'D' && pressed) {
-			moveDown(1);
-		}
-	}
+	
 
 	public void moveUp(int presses) {
 		if (presses == 1) {
@@ -66,13 +57,25 @@ public class Monster {
 		return y;
 	}
 
-	public int hidden() {
+	public void hidden() {
     
-	return hidden();
+     hidden= true;
+	
 	}
+    public void unhid(){
+	
+	
+	hidden= false;
+}
 
-	public void jump() {
 
-	}
 
+public boolean getHidden() {
+	
+	return hidden;
+	
+}
+
+	
+	
 }
