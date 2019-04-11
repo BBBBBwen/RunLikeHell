@@ -1,14 +1,10 @@
 
-import java.awt.Graphics2D;
-
 public class Monster {
-
+	private char keypress;
+	private boolean pressed;
 	private int y;
 	private int x;
 	private int Mspeed;
-	private String image = "/Users/mac/Desktop/23091897.jpg";
-	
-
 
 	public Monster(int initialX, int initialY, int initialMspeed) {
 		x = initialX;
@@ -16,29 +12,46 @@ public class Monster {
 		this.Mspeed = initialMspeed;
 	}
 
-	public void draw(Graphics2D  g2d) {
-		
-  
-		
-		
-		
+	public void action() {
+		if (keypress == 'L' && pressed) {
+			moveLeft(1);
+		}
+		if (keypress == 'R' && pressed) {
+			moveRight(1);
+		}
+		if (keypress == 'U' && pressed) {
+			moveUp(1);
+		}
+		if (keypress == 'D' && pressed) {
+			moveDown(1);
+		}
 	}
 
-	public void Move()// Monster movement
-
-	{
-		if (x + Mspeed <= 2)
-			;
-		x = x + Mspeed;
+	public void moveUp(int presses) {
+		if (presses == 1) {
+			y -= 1;
+		}
 	}
 
-	public boolean notMove()
+	public void moveDown(int presses) {
+		if (presses == 1) {
+			y += 1;
 
-	{
-		if (Mspeed == 1)
-			return true;
-		else
-			return false;
+		}
+	}
+
+	public void moveLeft(int presses) {
+		if (presses == 1) {
+			x -= 1;
+
+		}
+	}
+
+	public void moveRight(int presses) {
+		if (presses == 1) {
+			x += 1;
+
+		}
 	}
 
 	public int getX()
@@ -53,11 +66,12 @@ public class Monster {
 		return y;
 	}
 
-	public void hidden() {
-
+	public int hidden() {
+    
+	return hidden();
 	}
 
-	public void babymonster() {
+	public void jump() {
 
 	}
 
