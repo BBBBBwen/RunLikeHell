@@ -1,89 +1,178 @@
-package test;
+import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+class MonsterTest {
+	private static int initX, initY,Speed;
+	private static Monster monster;
+	@BeforeAll
+	static void setup() {
+		initX = 10;
+		initY = 10;
+	    Speed=5;
+		
+	}
 
-
-import org.junit.After;
-
-
-import org.junit.Before;
-
-
-import org.junit.Test;
-
-import model.Monster;
-
-
-
-public class TestMonster {
-
-
+	@Test
+	void testMoveUp() {
+		
+		monster = new Monster(initX, initY, Speed);
+		
+		//Actions
+		monster.moveUp(1);
+		
+		//Actual Results
+		int actualX = monster.getX();
+		int actualY = monster.getY();
+		
+		
+		//Expected Results
+		int expectedX = 10;
+		int expectedY = 9;
+		
+		
+		//Assertions
+		assertEquals(expectedX, actualX);
+		assertEquals(expectedY, actualY);
 	
-
-
-
-Monster M;
-
-
-
-	@Before
-
-
-	public void setUP()
-
-
-	{
-
-
-		M = new Monster(1,1);
-
+	}
+	
+	@Test
+	void testMoveDown() {
+		
+		monster = new Monster(initX, initY, Speed);
+		
+		//Actions
+		monster.moveDown(1);
+		
+		//Actual Results
+		int actualX = monster.getX();
+		int actualY = monster.getY();
+		
+		
+		//Expected Results
+		int expectedX = 10;
+		int expectedY = 11;
+		
+		
+		//Assertions
+		assertEquals(expectedX, actualX);
+		assertEquals(expectedY, actualY);
+		
+	}
+	
+	@Test
+	void testMoveLeft() {
+		
+		monster = new Monster(initX, initY, Speed);
+		
+		//Actions
+		monster.moveLeft(1);
+		
+		//Actual Results
+		int actualX = monster.getX();
+		int actualY = monster.getY();		
+		
+		//Expected Results
+		int expectedX = 9;
+		int expectedY = 10;
+		
+		
+		//Assertions
+		assertEquals(expectedX, actualX);
+		assertEquals(expectedY, actualY);
+		
+	}
+	
+	@Test
+	void testMoveRight() {
+		
+		monster = new Monster(initX, initY, Speed);
+		
+		//Actions
+		monster.moveRight(1);
+		
+		//Actual Results
+		int actualX = monster.getX();
+		int actualY = monster.getY();
 
 		
-
-
-		//x=1;
-
-
-		//y=1;
-
-
+		//Expected Results
+		int expectedX = 11;
+		int expectedY = 10;
+	
+		//Assertions
+		assertEquals(expectedX, actualX);
+		assertEquals(expectedY, actualY);
+		
 	}
-
-
-
+	
 	@Test
+	void testhidden() {
+		
+		monster = new Monster(initX, initY, Speed);
+		//Actions
+		monster.hidden();
+		
+		       boolean actualhidden= monster.getHidden();
+		
+				//Expected Results
+				boolean expecthidden=true;
+		
 
-
-	public void Move() {
-
-
-		M.Move();
-
-
-		assertEquals(2,M.getX());
-
-
+				//Assertions
+				assertEquals(expecthidden, actualhidden);
+			
+				
+		
 	}
-
-
+	
+	
+	
 	@Test
+	void testunhid() {
+		
+		monster = new Monster(initX, initY, Speed);
+		
+		//Actions
+		monster.unhid();
+		 boolean actualunhid= monster.getHidden();
+			
+			//Expected Results
+			boolean expectunhid=false;
+	
 
-
-	public void notMove() {
-
-
-	//	M.notMove();
-
-
-		//boolean Nmove = M.notMove("")
-
-
-		assertNotEquals(false,M.notMove());
-
-
-	}
-
-
+			//Assertions
+			assertEquals(expectunhid, actualunhid);
+		
+			
+		
+		
 
 }
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
