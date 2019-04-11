@@ -5,8 +5,8 @@ public class UserData {
 	ArrayList<User> users = new ArrayList<User>();
 	File file = new File("data.txt");
 
-	public String getName() {
-		return users.get(0).getUserName();
+	public String getName(int index) {
+		return users.get(index).getUserName();
 	}
 
 	public void register(User user) {
