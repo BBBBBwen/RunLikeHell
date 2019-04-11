@@ -6,9 +6,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class Game extends JFrame {
+	public final int timeAllowed = 1000;
+	JLabel time;
 	Grid grid;
-
+	Paint paint;
+	Player player;
+	Monster monster;
 	public Game() {
+		player = new Player(0,0,0);
+	monster = new Monster(5,5,1);
+	
+		paint = new Paint();
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 600); ////////////the location and the size of the program
@@ -19,7 +27,7 @@ public class Game extends JFrame {
 		setContentPane(contentPane);
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.EAST);
-		getContentPane().add(new Paint());
+		getContentPane().add(paint);
 		panel.setLayout(new GridLayout(10, 10, 10, 10));/////////////the distance between buttons
 		JButton start = new JButton("Start");  ///////////////////all button starts here
 		JButton pause = new JButton("Pause");
@@ -27,7 +35,7 @@ public class Game extends JFrame {
 		JButton register = new JButton("Register");
 		login.addActionListener(new MyActionListener());
 		register.addActionListener(new MyActionListener());
-		JLabel time = new JLabel("Time Unit:");
+		time = new JLabel("Time Unit: " + timeAllowed);
 		panel.add(start);
 		panel.add(pause);
 		panel.add(login);
@@ -37,7 +45,29 @@ public class Game extends JFrame {
 	public static void main(String args[]) throws Exception {
 		Game frame = new Game();
 		frame.setVisible(true);
+		frame.play();
 	}
+	public void delay(int time)
+	   {
+	   	try {
+				Thread.sleep(time);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}	   
+	   }
+	public void play() {
+		int time = 0;
+		String message;
+		while(time < timeAllowed) {
+			player.action();
+			time++;
+			this.time.setText("Time unit: " + (timeAllowed - time));
+			delay(1000);
+			paint.repaint();
+		}
+		message = (time < timeAllowed) ? "player win" : "player lost";
+		this.time.setText(message);
+}
 }
 class MyActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
