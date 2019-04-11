@@ -1,0 +1,18 @@
+1. 
+A trap will be deactivated after time runs out
+
+2. 
+Trap::getState(): boolean
+Trap::deactivate()
+Trap(xCor:int, yCor:int)
+
+3.
+- Action
+    - deactivate
+- Fixtures
+    - a trap exists
+    - initial active state is true
+    - deactivate it
+- Results
+    - the expected active state is false
+    - call succeeds

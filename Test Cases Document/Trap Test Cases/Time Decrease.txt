@@ -1,0 +1,18 @@
+1. 
+A trap's remaining time is decreased at a time interval
+
+2. 
+Player::getTime(): int
+Player::decTime()
+Trap(xCor:int, yCor:int)
+
+3.
+- Action
+    - decrease time
+- Fixtures
+    - a trap exists
+    - initial time is 10
+    - decrease by 1 unit
+- Results
+    - the expected time remaining is 9
+    - call succeeds
