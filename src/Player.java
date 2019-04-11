@@ -5,6 +5,7 @@ public class Player {
 	private boolean pressed;
 	private int xCor, yCor, energy;
 	private int trapPut = 0;
+	private Trap[] traps = new Trap[3];
 
 	public Player(int xCor, int yCor, int energy) {
 		this.xCor = xCor;
@@ -85,6 +86,9 @@ public class Player {
 	
 	public void putTrap() {
 		energy -= 50;
+		
+		traps[trapPut] = new Trap (xCor, yCor);
+		
 		trapPut += 1;
 	}
 
