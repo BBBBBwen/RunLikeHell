@@ -1,7 +1,7 @@
 
 public class Monster {
 
-	private boolean hidden;
+	private boolean hidden = false;
 	private int y;
 	private int x;
 	private int Mspeed;
