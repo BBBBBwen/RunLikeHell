@@ -1,0 +1,20 @@
+1. 
+Player can put down a trap
+
+2. 
+Player::getEnergy(): int
+Player::getTrapPut(): int
+Player::putTrap()
+Player(xCor:int, yCor:int, energy:int)
+
+3.
+- Action
+    - put down a trap
+- Fixtures
+    - a player exists
+    - initial trapPut is 0 and energy is 100
+    - put 1 trap
+- Results
+    - the expected energy is 50
+    - the expected trapPut is 1
+    - call succeeds

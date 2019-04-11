@@ -3,50 +3,105 @@ import java.awt.event.KeyEvent;
 public class Player {
 	private char keypress;
 	private boolean pressed;
-	private int x, y, energy;
+	private int xCor, yCor, energy;
+	private int trapPut = 0;
 
-	public Player(int width, int height, int ene) {
-		x = width;
-		y = height;
-		energy = ene;
+	public Player(int xCor, int yCor, int energy) {
+		this.xCor = xCor;
+		this.yCor = yCor;
+		this.energy = energy;
 	}
 
 	public void action() {
 		if (keypress == 'L' && pressed) {
-			x -= 1; // to be changed
+			moveLeft(1);
 		}
 		if (keypress == 'R' && pressed) {
-			x += 1; // to be changed
+			moveRight(1);
 		}
 		if (keypress == 'U' && pressed) {
-			y -= 1; // to be changed
+			moveUp(1);
 		}
 		if (keypress == 'D' && pressed) {
-			y += 1; // to be changed
-		}
-		if (keypress == 'S' && pressed) {
-			useSkill(); // to be improved
+			moveDown(1);
 		}
 	}
 
-	public void useSkill() {
-		// placeholder
+	public void moveUp(int presses) {
+		if (presses == 1) {
+			yCor -= 1;
+			energy -= 2;
+		} else if (presses == 2) {
+			yCor -= 2;
+			energy -= 6;
+		} else if (presses > 2) {
+			yCor -= 3;
+			energy -= 14;
+		}
 	}
 
-	public void die() {
-		// placeholder
+	public void moveDown(int presses) {
+		if (presses == 1) {
+			yCor += 1;
+			energy -= 2;
+		} else if (presses == 2) {
+			yCor += 2;
+			energy -= 6;
+		} else if (presses > 2) {
+			yCor += 3;
+			energy -= 14;
+		}
+	}
+
+	public void moveLeft(int presses) {
+		if (presses == 1) {
+			xCor -= 1;
+			energy -= 2;
+		} else if (presses == 2) {
+			xCor -= 2;
+			energy -= 6;
+		} else if (presses > 2) {
+			xCor -= 3;
+			energy -= 14;
+		}
+	}
+
+	public void moveRight(int presses) {
+		if (presses == 1) {
+			xCor += 1;
+			energy -= 2;
+		} else if (presses == 2) {
+			xCor += 2;
+			energy -= 6;
+		} else if (presses > 2) {
+			xCor += 3;
+			energy -= 14;
+		}
+	}
+
+	public void eat() {
+		energy += 6;
+	}
+	
+	public void putTrap() {
+		energy -= 50;
+		trapPut += 1;
 	}
 
 	public int getX() {
-		return x;
+		return xCor;
 	}
 
 	public int getY() {
-		return y;
+		return yCor;
 	}
 
 	public int getEnergy() {
 		return energy;
+	}
+	
+	public int getTrapPut() {
+		return trapPut;
 	}
 
 	public void setKey(char key, Boolean press) {
