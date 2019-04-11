@@ -9,8 +9,25 @@ public class UserData {
 		return users.get(index).getUserName();
 	}
 
-	public void register(User user) {
+	public boolean isRegister(User user) {
 		try {
+			InputStreamReader read;
+			try {
+				read = new InputStreamReader(new FileInputStream(file));
+				BufferedReader bufferedReader = new BufferedReader(read);
+				String lineT = null;
+				while((lineT = bufferedReader.readLine()) != null) {
+					String[] str = lineT.split(" ");
+					User userReg = new User(str[0],str[1]);
+					users.add(userReg);
+				}
+				if(!user.getUserName().equals(user.getUserName())){
+					return false;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			FileWriter fileWriter = new FileWriter(file);
 			BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
 			bufferWriter.write(user.getUserName()+" "+user.getPassword()+"\n");
@@ -19,6 +36,7 @@ public class UserData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return true;
 	}
 
 	public boolean isLogin(String userName, String password) {

@@ -146,8 +146,10 @@ class Register extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				UserData userData = new UserData();
 				User user = new User(textField1.getText(),textField2.getText());
-					userData.register(user);
+					if(userData.isRegister(user))
 					JOptionPane.showMessageDialog(button1, "Sucsuss");
+					else
+					JOptionPane.showMessageDialog(button1, "Fail");
 					dispose();
 			}
 		});
