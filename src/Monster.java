@@ -6,7 +6,6 @@ public class Monster {
 	private int x;
 	private int Mspeed;
 
-
 	public Monster(int initialX, int initialY, int initialMspeed) {
 		x = initialX;
 		y = initialY;
