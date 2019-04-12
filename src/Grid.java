@@ -1,8 +1,8 @@
 public class Grid {
 	int road = 57;
 	int mapSize = 11;
-	Cell cells[] = new Cell[road];////////////roads
-	Cell cells2D[][] = new Cell[mapSize][mapSize];/////////whold map
+	Cell cells[] = new Cell[road];//////////// roads
+	Cell cells2D[][] = new Cell[mapSize][mapSize];///////// whold map
 
 	public Grid() {
 		int k = 0;
@@ -20,15 +20,22 @@ public class Grid {
 		return cells;
 	}
 
-	public int setRoad(int road) {
-		return this.road = road;///////////////////////determain the road that objects can go through
+	public void setRoad(int road) {
+		this.road = road;/////////////////////// determain the road that objects can go through
 	}
 
-	public int setSize(int size) {
-		return this.mapSize = size;  //////////////////////determain the size of the map
+	public void setSize(int size) {
+		this.mapSize = size; ////////////////////// determain the size of the map
 	}
-
-	public static void main(String[] args) {//////////testing purpose
+	
+	public int getRoad() {
+		return road;
+	}
+	
+	public int getSize() {
+		return mapSize;
+	}
+	public static void main(String[] args) {////////// testing purpose
 		Grid grid = new Grid();
 		Cell[] cell = grid.getCells();
 		for (int n = 0; n < 9; n++)

@@ -6,13 +6,12 @@ import org.junit.jupiter.api.Test;
 class MonsterTest {
 	private static int initX, initY, Speed;
 	private static Monster monster;
-
+	
 	@BeforeAll
 	static void setup() {
 		initX = 10;
 		initY = 10;
-		Speed = 5;
-
+	    Speed=5;
 	}
 
 	@Test
