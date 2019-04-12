@@ -16,33 +16,33 @@ class TrapTest {
 	@Test
 	void testDecTime() {
 		trap = new Trap(initXCor, initYCor);
-		
+
 		// Actions
 		trap.decTime();
-		
+
 		// Actual Results
 		int actualTime = trap.getTime();
-		
+
 		// Expected Results
 		int expectedTime = 9;
 
 		// Assertions
 		assertEquals(expectedTime, actualTime);
 	}
-	
+
 	@Test
 	void testDeactivate() {
 		trap = new Trap(initXCor, initYCor);
-		
+
 		// Actions
 		trap.deactivate();
-		
+
 		// Actual Results
 		boolean actualState = trap.getState();
-		
+
 		// Expected Results
 		boolean expectedState = false;
-		
+
 		// Assertions
 		assertEquals(actualState, expectedState);
 	}

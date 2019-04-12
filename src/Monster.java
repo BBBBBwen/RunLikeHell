@@ -6,7 +6,6 @@ public class Monster {
 	private int x;
 	private int Mspeed;
 
-
 	public Monster(int initialX, int initialY, int initialMspeed) {
 		x = initialX;
 		y = initialY;
@@ -14,9 +13,8 @@ public class Monster {
 	}
 
 	public void action() {
-		
-		}
-	
+
+	}
 
 	public void moveUp(int presses) {
 		if (presses == 1) {
@@ -58,24 +56,20 @@ public class Monster {
 	}
 
 	public void hidden() {
-    
-     hidden= true;
-	
+
+		hidden = true;
+
 	}
-    public void unhid(){
-	
-	
-	hidden= false;
-}
 
+	public void unhid() {
 
+		hidden = false;
+	}
 
-public boolean getHidden() {
-	
-	return hidden;
-	
-}
+	public boolean getHidden() {
 
-	
-	
+		return hidden;
+
+	}
+
 }
