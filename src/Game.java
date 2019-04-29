@@ -1,22 +1,22 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class Game extends JFrame {
 	private int timeAllowed = 100;
+	boolean isReady = false;
 	JLabel time;
 	Grid grid;
 	Paint paint;
 	Player player;
 	Monster monster;
-
+	User user;
+	UserData userData;
 	public Game() {
 		player = new Player(0, 0, 0);
 		monster = new Monster(5, 5, 1);
-
 		paint = new Paint();
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,16 +34,29 @@ public class Game extends JFrame {
 		JButton pause = new JButton("Pause");
 		JButton login = new JButton("LogIn");
 		JButton register = new JButton("Register");
+		JButton rank = new JButton("Rank");
+		JButton setting = new JButton("Setting");
 		login.addActionListener(new MyActionListener());
 		register.addActionListener(new MyActionListener());
+		rank.addActionListener(new MyActionListener());
 		time = new JLabel("Time Unit: " + timeAllowed);
 		panel.add(start);
 		panel.add(pause);
 		panel.add(login);
 		panel.add(register);
+		panel.add(rank);
+		panel.add(setting);
 		panel.add(time);
 	}
 
+	public boolean isReady() {
+		return isReady;
+	}
+	
+	public void setDifficulty() {
+		grid.setMultiplier(JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)"));
+	}
+	
 	public static void main(String args[]) throws Exception {
 		Game frame = new Game();
 		frame.setVisible(true);
@@ -74,10 +87,11 @@ public class Game extends JFrame {
 			delay(1000);
 			paint.repaint();
 		}
+		user.setScore(timeAllowed - time);
 		message = (time < timeAllowed) ? "player Lost" : "player Win";
 		this.time.setText(message);
 	}
-}
+
 
 class MyActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
@@ -88,11 +102,13 @@ class MyActionListener implements ActionListener {
 		if (label.equals("Register")) {
 			new Register();
 		}
+		if (label.equals("Rank")) {
+			System.out.print(userData.getList());
+		}
 	}
 }
 
 class Login extends JFrame {
-	User user;
 	public Login() {
 		setTitle("Login");
 		JLabel label1 = new JLabel("UserName");
@@ -106,8 +122,8 @@ class Login extends JFrame {
 		JButton button1 = new JButton("Confirm");
 		button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserData userData = new UserData();
-				boolean flag = userData.isLogin(textField1.getText(), textField2.getText());
+				userData = new UserData();
+				boolean flag = userData.login(textField1.getText(), textField2.getText());
 				if (flag) {
 					JOptionPane.showMessageDialog(button1, "Sucsuss");
 					dispose();
@@ -143,7 +159,7 @@ class Login extends JFrame {
 
 class Register extends JFrame {
 	public Register() {
-		setTitle("Login");
+		setTitle("Register");
 		JLabel label1 = new JLabel("UserName");
 		label1.setBounds(10, 10, 200, 18);
 		JLabel label2 = new JLabel("Password");
@@ -157,7 +173,7 @@ class Register extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				UserData userData = new UserData();
 				User user = new User(textField1.getText(), textField2.getText());
-				if (userData.isRegister(user))
+				if (userData.register(user))
 					JOptionPane.showMessageDialog(button1, "Sucsuss");
 				else
 					JOptionPane.showMessageDialog(button1, "Fail");
@@ -187,4 +203,7 @@ class Register extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
+}
+
+
 }
