@@ -6,7 +6,6 @@ import javax.swing.border.EmptyBorder;
 
 public class Game extends JFrame {
 	private int timeAllowed = 100;
-	private boolean isReady = false;
 	private String difficulty;
 	private JLabel time;
 	private Grid grid;
@@ -38,6 +37,7 @@ public class Game extends JFrame {
 		JButton register = new JButton("Register");
 		JButton rank = new JButton("Rank");
 		JButton setting = new JButton("Setting");
+		start.addActionListener(new MyActionListener());
 		login.addActionListener(new MyActionListener());
 		register.addActionListener(new MyActionListener());
 		rank.addActionListener(new MyActionListener());
@@ -80,12 +80,14 @@ public class Game extends JFrame {
 	}
 
 	public void play() {
+		while(!player.isReady())
+			delay(1000);
 		int time = 0;
 		String message;
 		while (time < timeAllowed) {
 			player.action();
 			time++;
-			this.time.setText("Time unit: " + (timeAllowed - time));
+			this.time.setText("Time Unit: " + (timeAllowed - time));
 			delay(1000);
 			paint.repaint();
 		}
@@ -106,6 +108,9 @@ class MyActionListener implements ActionListener {
 		}
 		if (label.equals("Rank")) {
 			System.out.print(userData.getList());
+		}
+		if (label.equals("Start")) {
+			player.setReady();
 		}
 	}
 }

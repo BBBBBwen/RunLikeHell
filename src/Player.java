@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 public class Player {
 	private char keypress;
 	private boolean pressed;
+	private boolean ready = false;
 	private int xCor, yCor, energy;
 	private int trapPut = 0;
 	private Trap[] traps = new Trap[3];
@@ -13,6 +14,14 @@ public class Player {
 		this.energy = energy;
 	}
 
+	public void setReady() {
+		this.ready = true;
+	}
+	
+	public boolean isReady() {
+		return ready;
+	}
+	
 	public void action() {
 		if (keypress == 'L' && pressed) {
 			moveLeft(1);
