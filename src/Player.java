@@ -36,6 +36,7 @@ public class Player implements KeyListener{
 		if (keypress == 'D') {
 			yCor += 1;
 		}
+		keypress= ' ';
 	}
 
 	public void moveUp(int presses) {
@@ -142,7 +143,5 @@ public class Player implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		this.setKey(' ');
-		
 	}
 }
