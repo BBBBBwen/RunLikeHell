@@ -50,10 +50,6 @@ public class Game extends JFrame {
 		panel.add(setting);
 		panel.add(time);
 	}
-
-	public boolean isReady() {
-		return isReady;
-	}
 	
 	public void setDifficulty() {
 		this.difficulty = JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)");
