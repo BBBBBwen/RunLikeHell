@@ -47,7 +47,7 @@ public class Game extends JFrame {
 		controlPane.add(rank);
 		controlPane.add(setting);
 		controlPane.add(time);
-		start.addKeyListener(paint);
+		start.addKeyListener(player);
 		add(controlPane, BorderLayout.EAST);
 		this.add(paint, BorderLayout.CENTER);
 	}

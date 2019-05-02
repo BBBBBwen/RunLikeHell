@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class Paint extends JPanel implements KeyListener{
+public class Paint extends JPanel{
 	private int cellWidth = 35;
 	private int cellHeight = 35;
 	private final int Xalign = 100;
@@ -18,7 +18,6 @@ public class Paint extends JPanel implements KeyListener{
 		this.player = player;
 		this.monster = monster;
 		this.grid = grid;
-		addKeyListener(this);
 		this.requestFocus();
 	}
 
@@ -57,29 +56,5 @@ public class Paint extends JPanel implements KeyListener{
 		graphic.setColor(Color.black);
 		graphic.drawRect(x(monster.getX()), y(monster.getY()), cellWidth, cellHeight);
 	
-	}
-	
-	public void keyPressed(KeyEvent ke) {
-		if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
-			player.setKey('L');
-		}
-		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
-			player.setKey('R');
-		}
-		if (ke.getKeyCode() == KeyEvent.VK_UP) {
-			player.setKey('U');
-		}
-		if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
-			player.setKey('D');
-		}
-	}
-
-	public void keyReleased(KeyEvent ke) {
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		player.setKey(' ');
-		
 	}
 }

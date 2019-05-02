@@ -1,6 +1,7 @@
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Player {
+public class Player implements KeyListener{
 	private char keypress;
 	private boolean pressed;
 	private boolean ready = false;
@@ -121,4 +122,27 @@ public class Player {
 		keypress = key;
 	}
 
+	public void keyPressed(KeyEvent ke) {
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
+			this.setKey('L');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+			this.setKey('R');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_UP) {
+			this.setKey('U');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
+			this.setKey('D');
+		}
+	}
+
+	public void keyReleased(KeyEvent ke) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		this.setKey(' ');
+		
+	}
 }
