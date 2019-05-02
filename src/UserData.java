@@ -39,7 +39,7 @@ public class UserData {
 	
 	public boolean register(User user) {
 		for (User u : users)
-			if (!u.getUserName().equals(user.getUserName())) {
+			if (u.getUserName().equals(user.getUserName())) {
 				return false;
 			}
 		try {

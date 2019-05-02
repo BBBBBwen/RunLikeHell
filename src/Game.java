@@ -9,7 +9,7 @@ public class Game extends JFrame {
 	private int difficulty;
 	private JLabel time;
 	private Grid grid;
-	private Paint paint;
+	private gamePanel paint;
 	private Player player;
 	private Monster monster;
 	private User user;
@@ -19,7 +19,7 @@ public class Game extends JFrame {
 		grid = new Grid(difficulty);
 		player = new Player(0, 0, 0);
 		monster = new Monster(5, 5, 1);
-		paint = new Paint(player,monster,grid);
+		paint = new gamePanel(player,monster,grid);
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, (int)(640 * (1 + difficulty * 0.25)), (int)(480 * (1 + difficulty * 0.25))); //////////// the location and the size of the program
