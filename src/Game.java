@@ -6,18 +6,20 @@ import javax.swing.border.EmptyBorder;
 
 public class Game extends JFrame {
 	private int timeAllowed = 100;
-	boolean isReady = false;
-	JLabel time;
-	Grid grid;
-	Paint paint;
-	Player player;
-	Monster monster;
-	User user;
-	UserData userData;
+	private boolean isReady = false;
+	private String difficulty;
+	private JLabel time;
+	private Grid grid;
+	private Paint paint;
+	private Player player;
+	private Monster monster;
+	private User user;
+	private UserData userData;
 	public Game() {
+		this.setDifficulty();
 		player = new Player(0, 0, 0);
 		monster = new Monster(5, 5, 1);
-		paint = new Paint();
+		paint = new Paint(difficulty);
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 600); //////////// the location and the size of the program
@@ -54,7 +56,7 @@ public class Game extends JFrame {
 	}
 	
 	public void setDifficulty() {
-		grid.setMultiplier(JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)"));
+		this.difficulty = JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)");
 	}
 	
 	public static void main(String args[]) throws Exception {

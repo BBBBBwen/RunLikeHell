@@ -6,9 +6,11 @@ public class Paint extends JPanel {
 	private int cellHeight = 40;
 	private final int Xalign = 100;
 	private final int Yalign = 40;
-	Player player;
+	private String difficulty;
+	private Player player;
 	
-	public Paint() {
+	public Paint(String difficulty) {
+		this.difficulty = difficulty;
 	}
 
 	public void setCellWidth(int cellWidth) {
@@ -27,7 +29,7 @@ public class Paint extends JPanel {
 	}
 	
 	public void paintComponent(Graphics graphic) {////////// draw whole things, not complete
-		Grid grid = new Grid();
+		Grid grid = new Grid(difficulty);
 		super.paintComponent(graphic);
 		Cell[] cells = grid.getCells();
 		for (int i = 0; i < cells.length; i++) {
