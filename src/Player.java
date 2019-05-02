@@ -35,6 +35,8 @@ public class Player implements KeyListener{
 		}else
 		if (keypress == 'D') {
 			yCor += 1;
+		}else if(keypress == ' '){
+			
 		}
 	}
 
@@ -138,11 +140,21 @@ public class Player implements KeyListener{
 	}
 
 	public void keyReleased(KeyEvent ke) {
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
+			this.setKey(' ');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+			this.setKey(' ');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_UP) {
+			this.setKey(' ');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
+			this.setKey(' ');
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		this.setKey(' ');
-		
 	}
 }
