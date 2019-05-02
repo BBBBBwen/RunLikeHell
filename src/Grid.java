@@ -5,7 +5,7 @@ public class Grid {
 	private Cell road[];//////////// roads
 	private Cell map[][];///////// whole map
 
-	public Grid(String difficulty) {
+	public Grid(int difficulty) {
 		setMultiplier(difficulty);
 		roadSize = (2 + multiplier) * (10 + 9 * multiplier);
 		mapSize = 6 + (5 * multiplier);
@@ -22,13 +22,8 @@ public class Grid {
 		}
 	}
 
-	public void setMultiplier(String difficulty) {
-		if (difficulty.equals("easy"))
-			this.multiplier = 0;
-		else if (difficulty.equals("normal"))
-			this.multiplier = 1;
-		else if (difficulty.equals("hard"))
-			this.multiplier = 2;
+	public void setMultiplier(int difficulty) {
+			this.multiplier = difficulty;
 	}
 
 	public Cell[] getCells() {

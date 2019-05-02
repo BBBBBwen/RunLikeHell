@@ -6,7 +6,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Game extends JFrame {
 	private int timeAllowed = 100;
-	private String difficulty;
+	private int difficulty;
 	private JLabel time;
 	private Grid grid;
 	private Paint paint;
@@ -16,21 +16,18 @@ public class Game extends JFrame {
 	private UserData userData;
 	public Game() {
 		this.setDifficulty();
+		grid = new Grid(difficulty);
 		player = new Player(0, 0, 0);
 		monster = new Monster(5, 5, 1);
-		paint = new Paint(difficulty);
+		paint = new Paint(player,monster,grid);
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1024, 780); //////////// the location and the size of the program
+		setBounds(0, 0, (int)(640 * (1 + difficulty * 0.25)), (int)(480 * (1 + difficulty * 0.25))); //////////// the location and the size of the program
 		setResizable(false);
-		JPanel contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-		contentPane.setLayout(new BorderLayout(5, 5));
-		setContentPane(contentPane);
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.EAST);
-		getContentPane().add(paint);
-		panel.setLayout(new GridLayout(10, 10, 10, 10));///////////// the distance between buttons
+		JPanel controlPane = new JPanel();
+		controlPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		controlPane.setLayout(new BorderLayout(5, 5));
+		controlPane.setLayout(new GridLayout(10, 10, 10, 10));///////////// the distance between buttons
 		JButton start = new JButton("Start"); /////////////////// all button starts here
 		JButton pause = new JButton("Pause");
 		JButton login = new JButton("LogIn");
@@ -43,17 +40,26 @@ public class Game extends JFrame {
 		register.addActionListener(new MyActionListener());
 		rank.addActionListener(new MyActionListener());
 		time = new JLabel("Time Unit: " + timeAllowed);
-		panel.add(start);
-		panel.add(pause);
-		panel.add(login);
-		panel.add(register);
-		panel.add(rank);
-		panel.add(setting);
-		panel.add(time);
+		controlPane.add(start);
+		controlPane.add(pause);
+		controlPane.add(login);
+		controlPane.add(register);
+		controlPane.add(rank);
+		controlPane.add(setting);
+		controlPane.add(time);
+		start.addKeyListener(paint);
+		add(controlPane, BorderLayout.EAST);
+		this.add(paint, BorderLayout.CENTER);
 	}
 	
 	public void setDifficulty() {
-		this.difficulty = JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)");
+		String diff = JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)");
+		if (diff.equals("easy"))
+			this.difficulty = 0;
+		else if (diff.equals("normal"))
+			this.difficulty = 1;
+		else if (diff.equals("hard"))
+			this.difficulty = 2;
 	}
 	
 	public static void main(String args[]) throws Exception {
@@ -104,7 +110,7 @@ class MyActionListener implements ActionListener {
 			new Register();
 		}
 		if (label.equals("Rank")) {
-			System.out.print(userData.getList());
+			JOptionPane.showMessageDialog(null, userData.getList());
 		}
 		if (label.equals("Start")) {
 			player.setReady();

@@ -23,17 +23,17 @@ public class Player {
 	}
 	
 	public void action() {
-		if (keypress == 'L' && pressed) {
-			moveLeft(1);
-		}
-		if (keypress == 'R' && pressed) {
-			moveRight(1);
-		}
-		if (keypress == 'U' && pressed) {
-			moveUp(1);
-		}
-		if (keypress == 'D' && pressed) {
-			moveDown(1);
+		if (keypress == 'L') {
+			xCor -= 1;
+		}else
+		if (keypress == 'R') {
+			xCor += 1;
+		}else
+		if (keypress == 'U') {
+			yCor -= 1;
+		}else
+		if (keypress == 'D') {
+			yCor += 1;
 		}
 	}
 
@@ -117,30 +117,8 @@ public class Player {
 		return trapPut;
 	}
 
-	public void setKey(char key, Boolean press) {
+	public void setKey(char key) {
 		keypress = key;
-		pressed = press;
 	}
 
-	public void keyPressed(KeyEvent ke) {
-		if (ke.getKeyCode() == KeyEvent.VK_LEFT)
-			this.setKey('L', true);
-		if (ke.getKeyCode() == KeyEvent.VK_RIGHT)
-			this.setKey('R', true);
-		if (ke.getKeyCode() == KeyEvent.VK_UP)
-			this.setKey('U', true);
-		if (ke.getKeyCode() == KeyEvent.VK_DOWN)
-			this.setKey('D', true);
-	}
-
-	public void keyReleased(KeyEvent ke) {
-		if (ke.getKeyCode() == KeyEvent.VK_LEFT)
-			this.setKey('L', false);
-		if (ke.getKeyCode() == KeyEvent.VK_RIGHT)
-			this.setKey('R', false);
-		if (ke.getKeyCode() == KeyEvent.VK_UP)
-			this.setKey('U', false);
-		if (ke.getKeyCode() == KeyEvent.VK_DOWN)
-			this.setKey('D', false);
-	}
 }

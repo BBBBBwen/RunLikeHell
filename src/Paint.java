@@ -1,16 +1,25 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.*;
 
-public class Paint extends JPanel {
-	private int cellWidth = 40;
-	private int cellHeight = 40;
+public class Paint extends JPanel implements KeyListener{
+	private int cellWidth = 35;
+	private int cellHeight = 35;
 	private final int Xalign = 100;
 	private final int Yalign = 40;
-	private String difficulty;
 	private Player player;
-	
-	public Paint(String difficulty) {
-		this.difficulty = difficulty;
+	   private Monster monster;
+	   private Grid grid;
+	   Game game;
+	   
+	public Paint(Player player,Monster monster,Grid grid) {
+		this.player = player;
+		this.monster = monster;
+		this.grid = grid;
+		addKeyListener(this);
+		this.requestFocus();
 	}
 
 	public void setCellWidth(int cellWidth) {
@@ -29,7 +38,6 @@ public class Paint extends JPanel {
 	}
 	
 	public void paintComponent(Graphics graphic) {////////// draw whole things, not complete
-		Grid grid = new Grid(difficulty);
 		super.paintComponent(graphic);
 		Cell[] cells = grid.getCells();
 		for (int i = 0; i < cells.length; i++) {
@@ -38,11 +46,40 @@ public class Paint extends JPanel {
 			graphic.setColor(Color.black);
 			graphic.drawRect(x(cells[i].getX()), y(cells[i].getY()), cellWidth, cellHeight);
 		}
-		Cell playerCell = new Cell(0,0);
-		graphic.setColor(Color.black);
+		Cell playerCell = new Cell(player.getX(),player.getY());
+		graphic.setColor(Color.red);
 		graphic.fillRect(x(playerCell.getX()), y(playerCell.getY()), cellWidth, cellHeight);
 		graphic.setColor(Color.black);
 		graphic.drawRect(x(playerCell.getX()), y(playerCell.getY()), cellWidth, cellHeight);
+		Cell monsterCell = new Cell(monster.getX(),monster.getY());
+		graphic.setColor(Color.blue);
+		graphic.fillRect(x(monster.getX()), y(monster.getY()), cellWidth, cellHeight);
+		graphic.setColor(Color.black);
+		graphic.drawRect(x(monster.getX()), y(monster.getY()), cellWidth, cellHeight);
 	
+	}
+	
+	public void keyPressed(KeyEvent ke) {
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.setKey('L');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.setKey('R');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_UP) {
+			player.setKey('U');
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
+			player.setKey('D');
+		}
+	}
+
+	public void keyReleased(KeyEvent ke) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		player.setKey(' ');
+		
 	}
 }
