@@ -21,7 +21,7 @@ public class Game extends JFrame {
 		paint = new Paint(difficulty);
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 800, 600); //////////// the location and the size of the program
+		setBounds(0, 0, 1024, 780); //////////// the location and the size of the program
 		setResizable(false);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -38,6 +38,7 @@ public class Game extends JFrame {
 		JButton rank = new JButton("Rank");
 		JButton setting = new JButton("Setting");
 		start.addActionListener(new MyActionListener());
+		pause.addActionListener(new MyActionListener());
 		login.addActionListener(new MyActionListener());
 		register.addActionListener(new MyActionListener());
 		rank.addActionListener(new MyActionListener());
