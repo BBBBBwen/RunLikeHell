@@ -1,3 +1,4 @@
+package run;
 
 public class Monster {
 
@@ -5,6 +6,10 @@ public class Monster {
 	private int y;
 	private int x;
 	private int Mspeed;
+	private Grid grid;
+	private int distanceMax;
+	private int distanceX;
+	private int distanceY;
 
 	public Monster(int initialX, int initialY, int initialMspeed) {
 		x = initialX;
@@ -12,34 +17,69 @@ public class Monster {
 		this.Mspeed = initialMspeed;
 	}
 
+	public int getMspeed() {
+		return Mspeed;
+	}
+
+	public void setMspeed(int mspeed) {
+		Mspeed = mspeed;
+	}
+
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+
+	boolean invalid(int col, int row) {
+		int column = grid.getMapSize();
+		if (col < 0 || row < 0 || col > column - 1 || row > column - 1) {
+			return true;
+		}
+		Cell map[][] = grid.getMap();
+		if (map[row][col] == null) {
+			return true;
+		}
+		return false;
+	}
+
 	public void action() {
-
+		distanceMax = 2 * grid.getMapSize() * grid.getMapSize();
+		distanceX = x;
+		distanceY = y;
+		getDistance(x, y);
+		getDistance(x + 1, y);
+		getDistance(x - 1, y);
+		getDistance(x, y + 1);
+		getDistance(x, y - 1);
+		x = distanceX;
+		y = distanceY;
+		grid.setMonster(new Cell(x, y));
 	}
 
-	public void moveUp(int presses) {
-		if (presses == 1) {
-			y -= 1;
-		}
-	}
-
-	public void moveDown(int presses) {
-		if (presses == 1) {
-			y += 1;
-
-		}
-	}
-
-	public void moveLeft(int presses) {
-		if (presses == 1) {
-			x -= 1;
-
-		}
-	}
-
-	public void moveRight(int presses) {
-		if (presses == 1) {
-			x += 1;
-
+	void getDistance(int col, int row) {
+		Cell cellP = grid.getPlayer();
+		if (!invalid(col, row)) {
+			int distance = (col - cellP.getX()) * (col - cellP.getX()) + (row - cellP.getY()) * (row - cellP.getY());
+			if (distance < distanceMax) {
+				distanceMax = distance;
+				distanceX = col;
+				distanceY = row;
+			}
 		}
 	}
 
