@@ -89,6 +89,9 @@ public class Game extends JFrame {
 		String message;
 		while (time < timeAllowed) {
 			player.action();
+			if (time % monster.getMspeed() == 0) {
+				monster.action();
+			}
 			time++;
 			this.time.setText("Time Unit: " + (timeAllowed - time));
 			delay(1000);
