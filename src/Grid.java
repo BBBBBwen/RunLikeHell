@@ -1,3 +1,4 @@
+
 public class Grid {
 	private int multiplier;
 	private int roadSize;

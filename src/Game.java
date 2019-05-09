@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -6,23 +7,40 @@ import javax.swing.border.EmptyBorder;
 
 public class Game extends JFrame {
 	private int timeAllowed = 100;
-	private int difficulty;
+	private int difficulty = 1;
 	private JLabel time;
 	private Grid grid;
 	private gamePanel paint;
 	private Player player;
 	private Monster monster;
-	private User user;
-	private UserData userData;
+	private User user = new User("u", "p");
+	private UserData userData = new UserData();
+
 	public Game() {
 		this.setDifficulty();
 		grid = new Grid(difficulty);
-		player = new Player(0, 0, 0);
-		monster = new Monster(5, 5, 1);
-		paint = new gamePanel(player,monster,grid);
+
+		Cell cellP = new Cell(0, 0);
+		grid.setPlayer(cellP);
+		player = new Player(cellP.getX(), cellP.getY(), 0);
+		player.setGrid(grid);
+
+		Cell cellM = new Cell(5, 5);
+		grid.setMonster(cellM);
+		monster = new Monster(cellM.getX(), cellM.getY(), 3);
+		monster.setGrid(grid);
+
+		paint = new gamePanel(player, monster, grid);
 		setTitle("Run Like Hell");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, (int)(640 * (1 + difficulty * 0.25)), (int)(480 * (1 + difficulty * 0.25))); //////////// the location and the size of the program
+		setBounds(0, 0, (int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25))); //////////// the
+																										//////////// location
+																										//////////// and
+																										//////////// the
+																										//////////// size
+																										//////////// of
+																										//////////// the
+																										//////////// program
 		setResizable(false);
 		JPanel controlPane = new JPanel();
 		controlPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -51,7 +69,7 @@ public class Game extends JFrame {
 		add(controlPane, BorderLayout.EAST);
 		this.add(paint, BorderLayout.CENTER);
 	}
-	
+
 	public void setDifficulty() {
 		String diff = JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)");
 		if (diff.equals("easy"))
@@ -61,7 +79,7 @@ public class Game extends JFrame {
 		else if (diff.equals("hard"))
 			this.difficulty = 2;
 	}
-	
+
 	public static void main(String args[]) throws Exception {
 		Game frame = new Game();
 		frame.setVisible(true);
@@ -71,19 +89,21 @@ public class Game extends JFrame {
 	public void setTime(int timeAllowed) {
 		this.timeAllowed = timeAllowed;
 	}
+
 	public int getTime() {
 		return timeAllowed;
 	}
+
 	public void delay(int time) {
 		try {
-			Thread.sleep(time);
+			Thread.sleep(time / 4);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void play() {
-		while(!player.isReady())
+		while (!player.isReady())
 			delay(1000);
 		int time = 0;
 		String message;
@@ -102,121 +122,119 @@ public class Game extends JFrame {
 		this.time.setText(message);
 	}
 
-
-class MyActionListener implements ActionListener {
-	public void actionPerformed(ActionEvent e) {
-		String label = e.getActionCommand();
-		if (label.equals("LogIn")) {
-			new Login();
-		}
-		if (label.equals("Register")) {
-			new Register();
-		}
-		if (label.equals("Rank")) {
-			JOptionPane.showMessageDialog(null, userData.getList());
-		}
-		if (label.equals("Start")) {
-			player.setReady();
+	class MyActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			String label = e.getActionCommand();
+			if (label.equals("LogIn")) {
+				new Login();
+			}
+			if (label.equals("Register")) {
+				new Register();
+			}
+			if (label.equals("Rank")) {
+				JOptionPane.showMessageDialog(null, userData.getList());
+			}
+			if (label.equals("Start")) {
+				player.setReady();
+			}
 		}
 	}
-}
 
-class Login extends JFrame {
-	public Login() {
-		setTitle("Login");
-		JLabel label1 = new JLabel("UserName");
-		label1.setBounds(10, 10, 200, 18);
-		JLabel label2 = new JLabel("Password");
-		label2.setBounds(10, 50, 200, 18);
-		JTextField textField1 = new JTextField();
-		textField1.setBounds(90, 10, 150, 18);
-		JTextField textField2 = new JTextField();
-		textField2.setBounds(90, 50, 150, 18);
-		JButton button1 = new JButton("Confirm");
-		button1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				userData = new UserData();
-				boolean flag = userData.login(textField1.getText(), textField2.getText());
-				if (flag) {
-					JOptionPane.showMessageDialog(button1, "Sucsuss");
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(button1, "fail");
+	class Login extends JFrame {
+		public Login() {
+			setTitle("Login");
+			JLabel label1 = new JLabel("UserName");
+			label1.setBounds(10, 10, 200, 18);
+			JLabel label2 = new JLabel("Password");
+			label2.setBounds(10, 50, 200, 18);
+			JTextField textField1 = new JTextField();
+			textField1.setBounds(90, 10, 150, 18);
+			JTextField textField2 = new JTextField();
+			textField2.setBounds(90, 50, 150, 18);
+			JButton button1 = new JButton("Confirm");
+			button1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					userData = new UserData();
+					boolean flag = userData.login(textField1.getText(), textField2.getText());
+					if (flag) {
+						JOptionPane.showMessageDialog(button1, "Sucsuss");
+						dispose();
+					} else {
+						JOptionPane.showMessageDialog(button1, "fail");
+					}
 				}
-			}
-		});
-		button1.setBounds(40, 80, 100, 18);
-		JButton button2 = new JButton("Cancel");
-		button2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		button2.setBounds(150, 80, 100, 18);
-		Container container = getContentPane();
-		container.setLayout(null);
-		container.add(label1);
-		container.add(label2);
-		container.add(textField1);
-		container.add(textField2);
-		container.add(button1);
-		container.add(button2);
-		setBounds(0, 0, 300, 150);
-		setAlwaysOnTop(true);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setVisible(true);
+			});
+			button1.setBounds(40, 80, 100, 18);
+			JButton button2 = new JButton("Cancel");
+			button2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+			button2.setBounds(150, 80, 100, 18);
+			Container container = getContentPane();
+			container.setLayout(null);
+			container.add(label1);
+			container.add(label2);
+			container.add(textField1);
+			container.add(textField2);
+			container.add(button1);
+			container.add(button2);
+			setBounds(0, 0, 300, 150);
+			setAlwaysOnTop(true);
+			setResizable(false);
+			setLocationRelativeTo(null);
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setVisible(true);
+		}
 	}
-}
 
-class Register extends JFrame {
-	public Register() {
-		setTitle("Register");
-		JLabel label1 = new JLabel("UserName");
-		label1.setBounds(10, 10, 200, 18);
-		JLabel label2 = new JLabel("Password");
-		label2.setBounds(10, 50, 200, 18);
-		JTextField textField1 = new JTextField();
-		textField1.setBounds(90, 10, 150, 18);
-		JTextField textField2 = new JTextField();
-		textField2.setBounds(90, 50, 150, 18);
-		JButton button1 = new JButton("Confirm");
-		button1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UserData userData = new UserData();
-				User user = new User(textField1.getText(), textField2.getText());
-				if (userData.register(user))
-					JOptionPane.showMessageDialog(button1, "Sucsuss");
-				else
-					JOptionPane.showMessageDialog(button1, "Fail");
-				dispose();
-			}
-		});
-		button1.setBounds(40, 80, 100, 18);
-		JButton button2 = new JButton("Cancel");
-		button2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		button2.setBounds(150, 80, 100, 18);
-		Container container = getContentPane();
-		container.setLayout(null);
-		container.add(label1);
-		container.add(label2);
-		container.add(textField1);
-		container.add(textField2);
-		container.add(button1);
-		container.add(button2);
-		setBounds(0, 0, 300, 150);
-		setAlwaysOnTop(true);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setVisible(true);
+	class Register extends JFrame {
+		public Register() {
+			setTitle("Register");
+			JLabel label1 = new JLabel("UserName");
+			label1.setBounds(10, 10, 200, 18);
+			JLabel label2 = new JLabel("Password");
+			label2.setBounds(10, 50, 200, 18);
+			JTextField textField1 = new JTextField();
+			textField1.setBounds(90, 10, 150, 18);
+			JTextField textField2 = new JTextField();
+			textField2.setBounds(90, 50, 150, 18);
+			JButton button1 = new JButton("Confirm");
+			button1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					UserData userData = new UserData();
+					User user = new User(textField1.getText(), textField2.getText());
+					if (userData.register(user))
+						JOptionPane.showMessageDialog(button1, "Sucsuss");
+					else
+						JOptionPane.showMessageDialog(button1, "Fail");
+					dispose();
+				}
+			});
+			button1.setBounds(40, 80, 100, 18);
+			JButton button2 = new JButton("Cancel");
+			button2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+			button2.setBounds(150, 80, 100, 18);
+			Container container = getContentPane();
+			container.setLayout(null);
+			container.add(label1);
+			container.add(label2);
+			container.add(textField1);
+			container.add(textField2);
+			container.add(button1);
+			container.add(button2);
+			setBounds(0, 0, 300, 150);
+			setAlwaysOnTop(true);
+			setResizable(false);
+			setLocationRelativeTo(null);
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setVisible(true);
+		}
 	}
-}
-
 
 }
