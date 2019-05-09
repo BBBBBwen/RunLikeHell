@@ -1,7 +1,9 @@
+
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Player implements KeyListener{
+public class Player implements KeyListener {
 	private char keypress;
 	private boolean pressed;
 	private boolean ready = false;
@@ -15,28 +17,112 @@ public class Player implements KeyListener{
 		this.energy = energy;
 	}
 
+	public char getKeypress() {
+		return keypress;
+	}
+
+	public void setKeypress(char keypress) {
+		this.keypress = keypress;
+	}
+
+	public boolean isPressed() {
+		return pressed;
+	}
+
+	public void setPressed(boolean pressed) {
+		this.pressed = pressed;
+	}
+
+	public int getxCor() {
+		return xCor;
+	}
+
+	public void setxCor(int xCor) {
+		this.xCor = xCor;
+	}
+
+	public int getyCor() {
+		return yCor;
+	}
+
+	public void setyCor(int yCor) {
+		this.yCor = yCor;
+	}
+
+	public Trap[] getTraps() {
+		return traps;
+	}
+
+	public void setTraps(Trap[] traps) {
+		this.traps = traps;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
+	}
+
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
+
+	public void setTrapPut(int trapPut) {
+		this.trapPut = trapPut;
+	}
+
+	private Grid grid;
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
+
 	public void setReady() {
 		this.ready = true;
 	}
-	
+
 	public boolean isReady() {
 		return ready;
 	}
-	
+
+	boolean invalid(int col, int row) {
+		int column = grid.getMapSize();
+		if (col < 0 || row < 0 || col > column - 1 || row > column - 1) {
+			return true;
+		}
+		Cell map[][] = grid.getMap();
+		if (map[row][col] == null) {
+			return true;
+		}
+		return false;
+	}
+
 	public void action() {
 		if (keypress == 'L') {
 			xCor -= 1;
-		}else
-		if (keypress == 'R') {
+			if (invalid(xCor, yCor)) {
+				xCor += 1;
+			}
+		} else if (keypress == 'R') {
 			xCor += 1;
-		}else
-		if (keypress == 'U') {
+			if (invalid(xCor, yCor)) {
+				xCor -= 1;
+			}
+		} else if (keypress == 'U') {
 			yCor -= 1;
-		}else
-		if (keypress == 'D') {
+			if (invalid(xCor, yCor)) {
+				yCor += 1;
+			}
+		} else if (keypress == 'D') {
 			yCor += 1;
+			if (invalid(xCor, yCor)) {
+				yCor -= 1;
+			}
 		}
-		keypress= ' ';
+		grid.setPlayer(new Cell(xCor, yCor));
+		keypress = ' ';
 	}
 
 	public void moveUp(int presses) {
@@ -94,12 +180,12 @@ public class Player implements KeyListener{
 	public void eat() {
 		energy += 6;
 	}
-	
+
 	public void putTrap() {
 		energy -= 50;
-		
-		traps[trapPut] = new Trap (xCor, yCor);
-		
+
+		traps[trapPut] = new Trap(xCor, yCor);
+
 		trapPut += 1;
 	}
 
@@ -114,7 +200,7 @@ public class Player implements KeyListener{
 	public int getEnergy() {
 		return energy;
 	}
-	
+
 	public int getTrapPut() {
 		return trapPut;
 	}
