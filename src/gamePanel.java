@@ -52,10 +52,11 @@ public class gamePanel extends JPanel {
 		graphic.setColor(Color.black);
 		graphic.drawRect(x(playerCell.getX()), y(playerCell.getY()), cellWidth, cellHeight);
 		Cell monsterCell = new Cell(monster.getX(), monster.getY());
+		if (!monster.getHidden()){
 		graphic.setColor(Color.blue);
 		graphic.fillRect(x(monster.getX()), y(monster.getY()), cellWidth, cellHeight);
 		graphic.setColor(Color.black);
 		graphic.drawRect(x(monster.getX()), y(monster.getY()), cellWidth, cellHeight);
-
+		}
 	}
 }
