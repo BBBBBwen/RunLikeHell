@@ -2,7 +2,6 @@
 public class Monster {
 
 	private boolean hidden = false;
-	private int hiddenDuration = 6;// 6s
 	private int y;
 	private int x;
 	private int Mspeed;
@@ -10,7 +9,6 @@ public class Monster {
 	private int distanceMax;
 	private int distanceX;
 	private int distanceY;
-	private long actionCount = 1;
 
 	public Monster(int initialX, int initialY, int initialMspeed) {
 		x = initialX;
@@ -23,7 +21,7 @@ public class Monster {
 	}
 
 	public void setMspeed(int mspeed) {
-		Mspeed = mspeed;
+		Mspeed = 1;
 	}
 
 	public void setHidden(boolean hidden) {
@@ -74,25 +72,6 @@ public class Monster {
 		HandleHidden(x, y);
 	}
 
-	public void HandleHidden(int x, int y) {
-		Cell cellP = grid.getPlayer();
-		if (Math.abs(cellP.getX() - x) > 4 || Math.abs(cellP.getY() - y) > 4) {
-			if (!getHidden()) {
-				if ((actionCount % hiddenDuration) == 0) {
-					this.hidden();
-				}
-			}
-			if (getHidden()) {
-				if ((actionCount % hiddenDuration) == (hiddenDuration / 2)) {
-					this.unhid();
-				}
-			}
-		} else {
-			this.unhid();
-		}
-		actionCount++;
-	}
-
 	void shortestDistance(int col, int row) {
 		Cell cellP = grid.getPlayer();
 		if (!invalid(col, row)) {
@@ -103,6 +82,17 @@ public class Monster {
 				distanceY = row;
 			}
 		}
+	}
+
+	public void HandleHidden(int x, int y) {
+		Cell cellP = grid.getPlayer();
+		if (Math.abs(cellP.getX() - x) > 4 || Math.abs(cellP.getY() - y) > 4) {
+			this.hidden();
+
+		} else {
+			this.unhid();
+		}
+
 	}
 
 	public int getX()
