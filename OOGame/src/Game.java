@@ -1,9 +1,7 @@
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
+import javax.swing.border.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /* This class is the main System level class which creates all the objects
  * representing the game logic (model) and the panel for user interaction.
@@ -12,17 +10,21 @@ import java.awt.event.ActionListener;
 
 public class Game extends JFrame {
 
-	private final int timeAllowed = 100;
+	private int timeAllowed = 100;
+	private int score = 0;
 	private int difficulty = 1;
+	private int gameDelay = 1000;
+	private boolean isPause = false;
 	private JButton start = new JButton("Start"); /////////////////// all button starts here
 	private JButton pause = new JButton("Pause");
 	private JButton login = new JButton("LogIn");
 	private JButton register = new JButton("Register");
 	private JButton rank = new JButton("Rank");
+	private JButton setting = new JButton("Setting");
 	private JLabel timeLabel = new JLabel("Time Remaining : " + timeAllowed);
-	private User user = new User("u", "p");
+	private JLabel scoreLabel = new JLabel("Score : " + score);
 	private UserData userData = new UserData();
-
+	private static Game game;
 	private Grid grid;
 	private Player player;
 	private Monster monster;
@@ -39,6 +41,11 @@ public class Game extends JFrame {
 		monster = new Monster(grid, player, 5, 5);
 		boardPanel = new BoardPanel(grid, player, monster);
 
+		setTitle("RunLikeHell");
+		setSize((int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25)));
+		setLocationRelativeTo(null); // center the frame
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
 		// Create a separate panel and add all the buttons
 		JPanel controlPane = new JPanel();
 		controlPane.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -49,6 +56,8 @@ public class Game extends JFrame {
 		controlPane.add(login);
 		controlPane.add(register);
 		controlPane.add(rank);
+		controlPane.add(setting);
+		controlPane.add(scoreLabel);
 		controlPane.add(timeLabel);
 
 		// add Action listeners to all button events
@@ -57,6 +66,7 @@ public class Game extends JFrame {
 		login.addActionListener(new MyActionListener());
 		register.addActionListener(new MyActionListener());
 		rank.addActionListener(new MyActionListener());
+		setting.addActionListener(new MyActionListener());
 		start.addKeyListener(boardPanel);
 		// add panels to frame
 		this.add(boardPanel, BorderLayout.CENTER);
@@ -77,15 +87,6 @@ public class Game extends JFrame {
 	 * which it updates the moves in turn until time runs out (player won) or player
 	 * is eaten up (player lost).
 	 */
-	public void setDifficulty() {
-		String diff = JOptionPane.showInputDialog(null, "set Diificuty(easy,normal,hard)");
-		if (diff.equals("easy"))
-			this.difficulty = 0;
-		else if (diff.equals("normal"))
-			this.difficulty = 1;
-		else if (diff.equals("hard"))
-			this.difficulty = 2;
-	}
 
 	public String play() {
 		int time = 0;
@@ -95,31 +96,30 @@ public class Game extends JFrame {
 		while (!player.isReady())
 			delay(100);
 		do {
+			while (isPause)
+				delay(100);
 			Cell newPlayerCell = player.move();
 			Cell newMonsterCell = monster.move();
 			if (newPlayerCell != monster.getCell() && newMonsterCell != player.getCell()) {
 				player.setDirection(' '); // reset to no direction
 				// update time and repaint
 				time++;
+				score++;
+				scoreLabel.setText("Score : " + score);
 				timeLabel.setText("Time Remaining : " + (timeAllowed - time));
-				delay(1000);
+				delay(gameDelay);
 				boardPanel.repaint();
 			} else
 				check = false;
 		} while (time < timeAllowed && check);
 		message = time < timeAllowed ? "Player Lost" : "Player Won"; // players has been eaten up
-
+		userData.saveScore(score);
 		timeLabel.setText(message);
 		return message;
 	}
 
 	public static void main(String args[]) throws Exception {
-		Game game = new Game();
-		game.setTitle("RunLikeHell");
-		game.setSize(700, 700);
-		game.setLocationRelativeTo(null); // center the frame
-		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.setVisible(true);
+		game = new Game();
 		game.play();
 	}
 
@@ -135,8 +135,18 @@ public class Game extends JFrame {
 			if (label.equals("Rank")) {
 				JOptionPane.showMessageDialog(null, userData.getList());
 			}
+			if (label.equals("Setting")) {
+				new Setting();
+			}
 			if (label.equals("Start")) {
-				player.setReady(true);
+				isPause = false;
+				if (userData.isLogin())
+					player.setReady(true);
+				else
+					JOptionPane.showMessageDialog(null, "you need to login first");
+			}
+			if (label.equals("Pause")) {
+				isPause = true;
 			}
 		}
 	}
@@ -155,7 +165,6 @@ public class Game extends JFrame {
 			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					userData = new UserData();
 					boolean flag = userData.login(textField1.getText(), textField2.getText());
 					if (flag) {
 						JOptionPane.showMessageDialog(button1, "Sucsuss");
@@ -204,7 +213,6 @@ public class Game extends JFrame {
 			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					UserData userData = new UserData();
 					User user = new User(textField1.getText(), textField2.getText());
 					if (userData.register(user))
 						JOptionPane.showMessageDialog(button1, "Sucsuss");
@@ -230,6 +238,104 @@ public class Game extends JFrame {
 			container.add(button1);
 			container.add(button2);
 			setBounds(0, 0, 300, 150);
+			setAlwaysOnTop(true);
+			setResizable(false);
+			setLocationRelativeTo(null);
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setVisible(true);
+		}
+	}
+
+	class Setting extends JFrame {
+		public Setting() {
+			setTitle("Setting");
+
+			JLabel gameDifficulty = new JLabel("Game Difficulty");
+			gameDifficulty.setBounds(10, 10, 200, 18);
+			JRadioButton easy = new JRadioButton("Easy", true);
+			JRadioButton normal = new JRadioButton("Normal");
+			JRadioButton hard = new JRadioButton("Hard");
+			ButtonGroup group1 = new ButtonGroup();
+			group1.add(easy);
+			group1.add(normal);
+			group1.add(hard);
+
+			JLabel gameDuration = new JLabel("Game Duration");
+			gameDuration.setBounds(10, 50, 200, 18);
+			JRadioButton gd1 = new JRadioButton("100", true);
+			JRadioButton gd2 = new JRadioButton("200");
+			JRadioButton gd3 = new JRadioButton("300");
+			ButtonGroup group2 = new ButtonGroup();
+			group2.add(gd1);
+			group2.add(gd2);
+			group2.add(gd3);
+
+			JLabel gameFrequency = new JLabel("Game Frequency");
+			gameFrequency.setBounds(10, 100, 200, 18);
+			JRadioButton gf1 = new JRadioButton("0.2s/m", true);
+			JRadioButton gf2 = new JRadioButton("0.5s/m");
+			JRadioButton gf3 = new JRadioButton("1s/m");
+			ButtonGroup group3 = new ButtonGroup();
+			group3.add(gd1);
+			group3.add(gd2);
+			group3.add(gd3);
+
+			final JButton button1 = new JButton("Confirm");
+			button1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (easy.isSelected())
+						difficulty = 0;
+					else if (normal.isSelected())
+						difficulty = 1;
+					else if (hard.isSelected())
+						difficulty = 2;
+					if (gd1.isSelected())
+						timeAllowed = 100;
+					else if (gd2.isSelected())
+						timeAllowed = 200;
+					else if (gd3.isSelected())
+						timeAllowed = 300;
+					if (gf1.isSelected())
+						gameDelay = 200;
+					else if (gf2.isSelected())
+						gameDelay = 500;
+					else if (gf3.isSelected())
+						gameDelay = 1000;
+					game.setSize((int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25)));
+					boardPanel.setGrid(new Grid(difficulty));
+					dispose();
+				}
+			});
+			button1.setBounds(30, 100, 100, 18);
+
+			JButton button2 = new JButton("Cancel");
+			button2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+			button2.setBounds(140, 100, 100, 18);
+			JPanel container = new JPanel();
+
+			container.add(gameDifficulty);
+			container.add(easy);
+			container.add(normal);
+			container.add(hard);
+
+			container.add(gameDuration);
+			container.add(gd1);
+			container.add(gd2);
+			container.add(gd3);
+
+			container.add(gameFrequency);
+			container.add(gf1);
+			container.add(gf2);
+			container.add(gf3);
+
+			container.add(button1);
+			container.add(button2);
+			this.add(container);
+			setBounds(0, 0, 350, 200);
 			setAlwaysOnTop(true);
 			setResizable(false);
 			setLocationRelativeTo(null);

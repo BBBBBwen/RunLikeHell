@@ -3,9 +3,10 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class UserData {
-	ArrayList<User> users = new ArrayList<User>();
-	User currentUser;
-	File file = new File("data.txt");
+	private ArrayList<User> users = new ArrayList<User>();
+	private User currentUser;
+	private File file = new File("data.txt");
+	private boolean isLogin = false;
 
 	public UserData() {
 		InputStreamReader read;
@@ -34,7 +35,8 @@ public class UserData {
 			BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
 			for (User user : users) {
 				if (user.getUserName() == currentUser.getUserName()) {
-					user.setScore(score);
+					if (user.getScore() < score)
+						user.setScore(score);
 				}
 				bufferWriter.write(user.getUserName() + " " + user.getPassword() + " " + user.getScore() + "\n");
 			}
@@ -50,7 +52,7 @@ public class UserData {
 	}
 
 	public String getList() {
-		String msg = "";
+		String msg = "Name     Score\n";
 		ArrayList<User> usersTemp = users;
 		for (int i = 0; i < usersTemp.size() - 1; ++i) {
 			for (int j = i; j < usersTemp.size() - 1 - i; ++j) {
@@ -63,7 +65,7 @@ public class UserData {
 		}
 		int rankSize = usersTemp.size() <= 10 ? usersTemp.size() : 10;
 		for (int i = 0; i < rankSize; i++)
-			msg += usersTemp.get(i).getUserName() + " " + usersTemp.get(i).getScore() + "\n";
+			msg += usersTemp.get(i).getUserName() + "     " + usersTemp.get(i).getScore() + "\n";
 		return msg;
 	}
 
@@ -91,9 +93,14 @@ public class UserData {
 			if (userName.equals(user.getUserName()) && password.equals(user.getPassword())) {
 				flag = true;
 				currentUser = user;
+				isLogin = true;
 				break;
 			}
 		}
 		return flag;
+	}
+
+	public boolean isLogin() {
+		return isLogin;
 	}
 }

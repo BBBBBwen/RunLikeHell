@@ -18,7 +18,10 @@ public class BoardPanel extends JPanel implements KeyListener {
 		this.grid = grid;
 		this.monster = monster;
 	}
-
+	
+	public void setGrid(Grid grid) {
+		this.grid = grid;
+	}
 	/* responds to various Keyboard pressed */
 	@Override
 	public void keyPressed(KeyEvent ke) {
