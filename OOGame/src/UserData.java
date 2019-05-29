@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class UserData {
 	ArrayList<User> users = new ArrayList<User>();
+	User currentUser;
 	File file = new File("data.txt");
 
 	public UserData() {
@@ -26,25 +27,54 @@ public class UserData {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void saveScore(int score) {
+		try {
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
+			for (User user : users) {
+				if (user.getUserName() == currentUser.getUserName()) {
+					user.setScore(score);
+				}
+				bufferWriter.write(user.getUserName() + " " + user.getPassword() + " " + user.getScore() + "\n");
+			}
+			bufferWriter.close();
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public String getName(int index) {
 		return users.get(index).getUserName();
 	}
-	
+
 	public String getList() {
 		String msg = "";
-		for(int i = 0;i < users.size();i++)
-		msg += users.get(i).getUserName() + " " + users.get(i).getScore() + "\n";
+		ArrayList<User> usersTemp = users;
+		for (int i = 0; i < usersTemp.size() - 1; ++i) {
+			for (int j = i; j < usersTemp.size() - 1 - i; ++j) {
+				if (usersTemp.get(j).getScore() > usersTemp.get(j + 1).getScore()) {
+					User temp = usersTemp.get(j);
+					usersTemp.set(j, usersTemp.get(j + 1));
+					usersTemp.set(j + 1, temp);
+				}
+			}
+		}
+		int rankSize = usersTemp.size() <= 10 ? usersTemp.size() : 10;
+		for (int i = 0; i < rankSize; i++)
+			msg += usersTemp.get(i).getUserName() + " " + usersTemp.get(i).getScore() + "\n";
 		return msg;
 	}
-	
+
 	public boolean register(User user) {
 		for (User u : users)
 			if (u.getUserName().equals(user.getUserName())) {
 				return false;
 			}
 		try {
-			FileWriter fileWriter = new FileWriter(file);
+			users.add(user);
+			FileWriter fileWriter = new FileWriter(file, true);
 			BufferedWriter bufferWriter = new BufferedWriter(fileWriter);
 			bufferWriter.write(user.getUserName() + " " + user.getPassword() + " " + user.getScore() + "\n");
 			bufferWriter.close();
@@ -60,6 +90,7 @@ public class UserData {
 		for (User user : users) {
 			if (userName.equals(user.getUserName()) && password.equals(user.getPassword())) {
 				flag = true;
+				currentUser = user;
 				break;
 			}
 		}
