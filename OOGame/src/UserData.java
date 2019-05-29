@@ -51,8 +51,7 @@ public class UserData {
 		return users.get(index).getUserName();
 	}
 
-	public String getList() {
-		String msg = "Name     Score\n";
+	public User[] getList() {
 		ArrayList<User> usersTemp = users;
 		for (int i = 0; i < usersTemp.size() - 1; ++i) {
 			for (int j = i; j < usersTemp.size() - 1 - i; ++j) {
@@ -64,9 +63,10 @@ public class UserData {
 			}
 		}
 		int rankSize = usersTemp.size() <= 10 ? usersTemp.size() : 10;
+		User[] userList = new User[rankSize];
 		for (int i = 0; i < rankSize; i++)
-			msg += usersTemp.get(i).getUserName() + "     " + usersTemp.get(i).getScore() + "\n";
-		return msg;
+			userList[i] = usersTemp.get(i);
+		return userList;
 	}
 
 	public boolean register(User user) {

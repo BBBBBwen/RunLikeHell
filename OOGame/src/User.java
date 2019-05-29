@@ -10,11 +10,11 @@ public class User {
 		this.password = password;
 		this.score = 0;
 	}
-	
+
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
+
 	public String getUserName() {
 		return userName;
 	}
@@ -22,7 +22,7 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public int getScore() {
 		return score;
 	}

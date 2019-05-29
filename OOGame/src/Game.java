@@ -133,7 +133,7 @@ public class Game extends JFrame {
 				new Register();
 			}
 			if (label.equals("Rank")) {
-				JOptionPane.showMessageDialog(null, userData.getList());
+				new Rank();
 			}
 			if (label.equals("Setting")) {
 				new Setting();
@@ -150,6 +150,44 @@ public class Game extends JFrame {
 			}
 		}
 	}
+	
+	class Rank extends JFrame {
+		public Rank() {
+		setTitle("Rank");
+		Container container = getContentPane();
+		container.setLayout(null);
+		JLabel label1 = new JLabel("Name");
+		container.add(label1);
+		JLabel label2 = new JLabel("Score");
+		container.add(label2);
+		
+		User[] userList = userData.getList();
+		JLabel[] nameList = new JLabel[userList.length];
+		JLabel[] scoreList = new JLabel[userList.length];
+		for(int i = 0;i < userList.length; ++i) {
+			nameList[i] = new JLabel(userList[i].getUserName());
+			scoreList[i] = new JLabel("" + userList[i].getScore());
+			container.add(nameList[i]);
+			container.add(scoreList[i]);
+		}
+		container.setLayout(new GridLayout(userList.length + 2,3,40,40));
+		JButton button = new JButton("Confirm");
+		button.setSize(20, 20);
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					dispose();
+			}
+		});
+	
+		container.add(button);
+		setBounds(0, 0, 300, 300);
+		setAlwaysOnTop(true);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
+	}
+	}
 
 	class Login extends JFrame {
 		public Login() {
@@ -160,12 +198,12 @@ public class Game extends JFrame {
 			label2.setBounds(10, 50, 200, 18);
 			final JTextField textField1 = new JTextField();
 			textField1.setBounds(90, 10, 150, 18);
-			final JTextField textField2 = new JTextField();
-			textField2.setBounds(90, 50, 150, 18);
+			JPasswordField passwordField = new JPasswordField();
+			passwordField.setBounds(90, 50, 150, 18);
 			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					boolean flag = userData.login(textField1.getText(), textField2.getText());
+					boolean flag = userData.login(textField1.getText(), String.valueOf(passwordField.getPassword()));
 					if (flag) {
 						JOptionPane.showMessageDialog(button1, "Sucsuss");
 						dispose();
@@ -187,7 +225,7 @@ public class Game extends JFrame {
 			container.add(label1);
 			container.add(label2);
 			container.add(textField1);
-			container.add(textField2);
+			container.add(passwordField);
 			container.add(button1);
 			container.add(button2);
 			setBounds(0, 0, 300, 150);
@@ -208,12 +246,12 @@ public class Game extends JFrame {
 			label2.setBounds(10, 50, 200, 18);
 			final JTextField textField1 = new JTextField();
 			textField1.setBounds(90, 10, 150, 18);
-			final JTextField textField2 = new JTextField();
-			textField2.setBounds(90, 50, 150, 18);
+			JPasswordField passwordField = new JPasswordField();
+			passwordField.setBounds(90, 50, 150, 18);
 			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					User user = new User(textField1.getText(), textField2.getText());
+					User user = new User(textField1.getText(), String.valueOf(passwordField.getPassword()));
 					if (userData.register(user))
 						JOptionPane.showMessageDialog(button1, "Sucsuss");
 					else
@@ -234,7 +272,7 @@ public class Game extends JFrame {
 			container.add(label1);
 			container.add(label2);
 			container.add(textField1);
-			container.add(textField2);
+			container.add(passwordField);
 			container.add(button1);
 			container.add(button2);
 			setBounds(0, 0, 300, 150);
