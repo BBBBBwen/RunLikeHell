@@ -1,10 +1,11 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+
 import javax.swing.*;
 
-public class gamePanel extends JPanel {
+public class BoardPanel extends JPanel {
 	private Player player;
 	private Monster monster;
-	private Graphics graphics;
 	private Grid grid;
 	private Game game;
 	private final int cellWidth = 35;
@@ -13,11 +14,10 @@ public class gamePanel extends JPanel {
 	private final int Tmargin = 40;
 
 	public BoardPanel(Grid grid, Player player, Monster monster) {
-    this.player = player;
-    this.grid = grid;
-    this.monster = monster;
-    this.graphics = this.getGraphics();
-  }
+		this.player = player;
+		this.grid = grid;
+		this.monster = monster;
+	}
 
 	/* responds to various button clicked messages */
 	public void actionPerformed(ActionEvent e) {
@@ -47,8 +47,8 @@ public class gamePanel extends JPanel {
 	 * Redraws the board and the pieces Called initially and in response to
 	 * repaint()
 	 */
-	protected void paintComponent(Graphics gr) {
-		super.paintComponent(gr);
+	protected void paintComponent(Graphics graphics) {
+		super.paintComponent(graphics);
 		Cell cells[] = grid.getAllCells();
 		Cell cell;
 		for (int i = 0; i < cells.length; i++) {
@@ -57,23 +57,23 @@ public class gamePanel extends JPanel {
 				graphics.setColor(Color.cyan);
 			else
 				graphics.setColor(Color.white);
-			graphics.fillRect(xCor(cell.col), yCor(cell.row), CELLWIDTH, CELLHEIGHT);
+			graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
 			graphics.setColor(Color.black);
-			graphics.drawRect(xCor(cell.col), yCor(cell.row), CELLWIDTH, CELLHEIGHT);
+			graphics.drawRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
 		}
 		cell = player.getCell();
 		graphics.setColor(Color.red);
-		graphics.fillOval(xCor(cell.col) + CELLWIDTH / 8, yCor(cell.row) + CELLWIDTH / 8, CELLWIDTH * 3 / 4,
-				CELLHEIGHT * 3 / 4);
+		graphics.fillOval(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
+				cellHeight * 3 / 4);
 		graphics.setColor(Color.white);
-		graphics.drawString("P", xCor(cell.col) + CELLWIDTH / 3, yCor(cell.row) + 2 * CELLWIDTH / 3);
+		graphics.drawString("P", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 
 		if (monster.viewable()) {
 			cell = monster.getCell();
 			graphics.setColor(Color.black);
-			graphics.fillRect(xCor(cell.col), yCor(cell.row), CELLWIDTH, CELLHEIGHT);
+			graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
 			graphics.setColor(Color.white);
-			graphics.drawString("M", xCor(cell.col) + CELLWIDTH / 3, yCor(cell.row) + 2 * CELLWIDTH / 3);
+			graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 		}
 	}
 }

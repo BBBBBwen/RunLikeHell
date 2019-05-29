@@ -36,7 +36,7 @@ public class Grid {
 	public Cell getCell(int row, int col) throws Exception {
 		if ((row % 5 != 0 && col % 5 != 0) || row < 0 || row > 10 || col < 0 || col > 10)
 			throw new Exception("Invalid Coordiantes row = " + row + " column " + col);
-		return cells2D[row][col];
+		return map[row][col];
 	}
 
 	/*
@@ -49,26 +49,26 @@ public class Grid {
 			return cell;
 		if (direction == 'U') {
 			if (cell.col % 5 == 0 && cell.row > 0)
-				return cells2D[cell.row - 1][cell.col];
+				return map[cell.row - 1][cell.col];
 			return cell;
 		} else if (direction == 'D') {
 			if (cell.col % 5 == 0 && cell.row < 10)
-				return cells2D[cell.row + 1][cell.col];
+				return map[cell.row + 1][cell.col];
 			return cell;
 		} else if (direction == 'L') {
 			if (cell.row % 5 == 0 && cell.col > 0)
-				return cells2D[cell.row][cell.col - 1];
+				return map[cell.row][cell.col - 1];
 			return cell;
 		} else if (direction == 'R') {
 			if (cell.row % 5 == 0 && cell.col < 10)
-				return cells2D[cell.row][cell.col + 1];
+				return map[cell.row][cell.col + 1];
 			return cell;
 		}
 		return null;
 	}
 
 	public Cell[] getAllCells() {
-		return cells;
+		return road;
 	}
 
 	/*
@@ -162,7 +162,7 @@ public class Grid {
 
 	/* Test harness for Grid */
 	public static void main(String args[]) throws Exception {
-		Grid grid = new Grid();
+		Grid grid = new Grid(1);
 		Cell c1 = grid.getCell(0, 0);
 		Cell c2 = grid.getCell(10, 10);
 		Cell c3 = grid.getCell(0, 2);

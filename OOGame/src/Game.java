@@ -1,6 +1,9 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /* This class is the main System level class which creates all the objects
  * representing the game logic (model) and the panel for user interaction.
@@ -16,7 +19,9 @@ public class Game extends JFrame {
 	private JButton login = new JButton("LogIn");
 	private JButton register = new JButton("Register");
 	private JButton rank = new JButton("Rank");
-	private private JLabel timeLabel = new JLabel("Time Remaining : " + timeAllowed);
+	private JLabel timeLabel = new JLabel("Time Remaining : " + timeAllowed);
+	private User user = new User("u", "p");
+	private UserData userData = new UserData();
 
 	private Grid grid;
 	private Player player;
@@ -29,25 +34,27 @@ public class Game extends JFrame {
 	 * in an invalid location.
 	 */
 	public Game() throws Exception {
-		grid = new Grid();
+		grid = new Grid(difficulty);
 		player = new Player(grid, 0, 0);
 		monster = new Monster(grid, player, 5, 5);
 		boardPanel = new BoardPanel(grid, player, monster);
 
 		// Create a separate panel and add all the buttons
 		JPanel controlPane = new JPanel();
+		controlPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		controlPane.setLayout(new BorderLayout(5, 5));
+		controlPane.setLayout(new GridLayout(10, 10, 10, 10));
 		controlPane.add(start);
 		controlPane.add(pause);
 		controlPane.add(login);
 		controlPane.add(register);
 		controlPane.add(rank);
-		start.addKeyListener(player);
 
 		// add Action listeners to all button events
 		start.addActionListener(new MyActionListener());
 		pause.addActionListener(new MyActionListener());
 		login.addActionListener(new MyActionListener());
-		register.addActionListener(newMyActionListener());
+		register.addActionListener(new MyActionListener());
 		rank.addActionListener(new MyActionListener());
 
 		// add panels to frame
@@ -128,7 +135,7 @@ public class Game extends JFrame {
 				JOptionPane.showMessageDialog(null, userData.getList());
 			}
 			if (label.equals("Start")) {
-				player.setReady();
+				player.setReady(true);
 			}
 		}
 	}
@@ -140,11 +147,11 @@ public class Game extends JFrame {
 			label1.setBounds(10, 10, 200, 18);
 			JLabel label2 = new JLabel("Password");
 			label2.setBounds(10, 50, 200, 18);
-			JTextField textField1 = new JTextField();
+			final JTextField textField1 = new JTextField();
 			textField1.setBounds(90, 10, 150, 18);
-			JTextField textField2 = new JTextField();
+			final JTextField textField2 = new JTextField();
 			textField2.setBounds(90, 50, 150, 18);
-			JButton button1 = new JButton("Confirm");
+			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					userData = new UserData();
@@ -189,11 +196,11 @@ public class Game extends JFrame {
 			label1.setBounds(10, 10, 200, 18);
 			JLabel label2 = new JLabel("Password");
 			label2.setBounds(10, 50, 200, 18);
-			JTextField textField1 = new JTextField();
+			final JTextField textField1 = new JTextField();
 			textField1.setBounds(90, 10, 150, 18);
-			JTextField textField2 = new JTextField();
+			final JTextField textField2 = new JTextField();
 			textField2.setBounds(90, 50, 150, 18);
-			JButton button1 = new JButton("Confirm");
+			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					UserData userData = new UserData();

@@ -10,7 +10,7 @@ public class Player extends Moveable {
    }
    public Cell move()
    {
-       currentCell = grid.getCell(currentCell,currentDirection);	          
+		currentCell = grid.getCell(currentCell,currentDirection);	          
        return currentCell;
    }
    public int maxCellsPerMove()
