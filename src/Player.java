@@ -4,11 +4,13 @@ import java.awt.event.KeyListener;
 
 public class Player implements KeyListener {
 	private char keypress;
-	private boolean pressed;
 	private boolean ready = false;
 	private int xCor, yCor, energy;
 	private int trapPut = 0;
-	private Trap[] traps = new Trap[3];
+	private int roadblockPut = 0;
+	private Trap[] traps = new Trap[99];
+	private Roadblock[] roadblocks = new Roadblock[3];
+	private int presses = 0;
 
 	public Player(int xCor, int yCor, int energy) {
 		this.xCor = xCor;
@@ -19,17 +21,13 @@ public class Player implements KeyListener {
 	public char getKeypress() {
 		return keypress;
 	}
+	
+	public int getPresses() {
+		return presses;
+	}
 
 	public void setKeypress(char keypress) {
 		this.keypress = keypress;
-	}
-
-	public boolean isPressed() {
-		return pressed;
-	}
-
-	public void setPressed(boolean pressed) {
-		this.pressed = pressed;
 	}
 
 	public int getxCor() {
@@ -122,6 +120,7 @@ public class Player implements KeyListener {
 		}
 		grid.setPlayer(new Cell(xCor, yCor));
 		keypress = ' ';
+		this.presses = 0;
 	}
 
 	public void moveUp(int presses) {
@@ -211,15 +210,19 @@ public class Player implements KeyListener {
 	public void keyPressed(KeyEvent ke) {
 		if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
 			this.setKey('L');
+			this.presses += 1;
 		}
 		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
 			this.setKey('R');
+			this.presses += 1;
 		}
 		if (ke.getKeyCode() == KeyEvent.VK_UP) {
 			this.setKey('U');
+			this.presses += 1;
 		}
 		if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
 			this.setKey('D');
+			this.presses += 1;
 		}
 	}
 
