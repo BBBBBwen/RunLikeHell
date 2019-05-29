@@ -49,6 +49,7 @@ public class Game extends JFrame {
 		controlPane.add(login);
 		controlPane.add(register);
 		controlPane.add(rank);
+		controlPane.add(timeLabel);
 
 		// add Action listeners to all button events
 		start.addActionListener(new MyActionListener());
@@ -56,7 +57,7 @@ public class Game extends JFrame {
 		login.addActionListener(new MyActionListener());
 		register.addActionListener(new MyActionListener());
 		rank.addActionListener(new MyActionListener());
-
+		start.addKeyListener(boardPanel);
 		// add panels to frame
 		this.add(boardPanel, BorderLayout.CENTER);
 		this.add(controlPane, BorderLayout.EAST);
@@ -103,8 +104,8 @@ public class Game extends JFrame {
 				timeLabel.setText("Time Remaining : " + (timeAllowed - time));
 				delay(1000);
 				boardPanel.repaint();
-			}
-			check = false;
+			} else
+				check = false;
 		} while (time < timeAllowed && check);
 		message = time < timeAllowed ? "Player Lost" : "Player Won"; // players has been eaten up
 

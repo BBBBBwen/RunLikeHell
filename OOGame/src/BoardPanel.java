@@ -1,13 +1,13 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-public class BoardPanel extends JPanel {
+public class BoardPanel extends JPanel implements KeyListener {
 	private Player player;
 	private Monster monster;
 	private Grid grid;
-	private Game game;
 	private final int cellWidth = 35;
 	private final int cellHeight = 35;
 	private final int Lmargin = 100;
@@ -19,18 +19,25 @@ public class BoardPanel extends JPanel {
 		this.monster = monster;
 	}
 
-	/* responds to various button clicked messages */
-	public void actionPerformed(ActionEvent e) {
-		if (((JButton) e.getSource()).getText().compareTo("up") == 0)
-			player.setDirection('U');
-		else if (((JButton) e.getSource()).getText().compareTo("down") == 0)
-			player.setDirection('D');
-		else if (((JButton) e.getSource()).getText().compareTo("left") == 0)
+	/* responds to various Keyboard pressed */
+	@Override
+	public void keyPressed(KeyEvent ke) {
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT)
 			player.setDirection('L');
-		else if (((JButton) e.getSource()).getText().compareTo("right") == 0)
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT)
 			player.setDirection('R');
-		else if (((JButton) e.getSource()).getText().compareTo("start") == 0)
-			player.setReady(true);
+		if (ke.getKeyCode() == KeyEvent.VK_UP)
+			player.setDirection('U');
+		if (ke.getKeyCode() == KeyEvent.VK_DOWN)
+			player.setDirection('D');
+	}
+
+	@Override
+	public void keyReleased(KeyEvent ke) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 	}
 
 	/* returns the x coordinate based on left margin and cell width */
