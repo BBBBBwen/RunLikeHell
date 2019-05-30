@@ -25,6 +25,7 @@ public class Game extends JFrame {
 	private JButton setting = new JButton("Setting");
 	private JLabel timeLabel = new JLabel("Time Remaining : " + timeAllowed);
 	private JLabel scoreLabel = new JLabel("Score : " + score);
+	private JLabel energyLabel;
 	private UserData userData = new UserData();
 	private static Game game;
 	private Grid grid;
@@ -44,6 +45,7 @@ public class Game extends JFrame {
 		monster = new Monster(grid, player, 5, 5);
 		babymonster = new BabyMonster(grid, player, 0, 2);
 		boardPanel = new BoardPanel(grid, player, monster, babymonster);
+		energyLabel = new JLabel("Score : " + player.getEnergy());
 
 		setTitle("RunLikeHell");
 		setSize((int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25)));
@@ -62,6 +64,7 @@ public class Game extends JFrame {
 		controlPane.add(register);
 		controlPane.add(rank);
 		controlPane.add(setting);
+		controlPane.add(energyLabel);
 		controlPane.add(scoreLabel);
 		controlPane.add(timeLabel);
 
@@ -128,13 +131,14 @@ public class Game extends JFrame {
 				// update time and repaint
 				time++;
 				score++;
+				energyLabel.setText("Energy : " + player.getEnergy());
 				scoreLabel.setText("Score : " + score);
 				timeLabel.setText("Time Remaining : " + (timeAllowed - time));
 				delay(gameDelay);
 				boardPanel.repaint();
 			} else
 				check = false;
-		} while (time < timeAllowed && check);
+		} while (time < timeAllowed && check && player.isReady());
 		message = time < timeAllowed ? "Player Lost" : "Player Won"; // players has been eaten up
 		userData.saveScore(score);
 		timeLabel.setText(message);
