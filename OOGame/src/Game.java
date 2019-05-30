@@ -128,8 +128,8 @@ public class Game extends JFrame {
 			Cell firstMonsterCell = monsters.get(0).move(1);
 			ArrayList<Cell> MonstersCell = new ArrayList<>();
 			
-			for (Monster monster : monsters)
-				MonstersCell.add(monster.move(1));
+			for (int i = 1;i < monsters.size(); ++i)
+				MonstersCell.add(monsters.get(i).move(1));
 			for (int i = 0; i < monsters.size(); ++i)
 				if (newPlayerCell == monsters.get(i).getCell() && MonstersCell.get(i) == player.getCell())
 					checkEaten = true;
