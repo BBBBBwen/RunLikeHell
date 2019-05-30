@@ -1,12 +1,11 @@
 
 public class Trap {
 	private Cell currentCell;
-	private Grid grid;
 	private int timeRemain;
 	private boolean active;
 
-	public Trap(Grid g, int row, int col) throws Exception {
-		currentCell = grid.getCell(row, col);
+	public Trap(Grid g, Cell cell) {
+		currentCell = cell;
 		active = true;
 		timeRemain = 10;
 	}

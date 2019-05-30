@@ -1,11 +1,10 @@
 
 public class Nougat {
 	private Cell currentCell;
-	private Grid grid;
 	private boolean notEaten = true;
 
-	public Nougat(Grid g, int row, int col) throws Exception {
-		currentCell = grid.getCell(row, col);
+	public Nougat(Grid g, Cell cell) {
+		currentCell = cell;
 	}
 
 	public boolean getState() {

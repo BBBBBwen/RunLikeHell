@@ -60,6 +60,12 @@ public class BoardPanel extends JPanel implements KeyListener {
 			player.setDirection('D');
 			player.addPress();
 		}
+		if (ke.getKeyCode() == KeyEvent.VK_Z) {
+			player.putTrap();
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_X) {
+			player.putBlock();
+		}
 	}
 
 	@Override

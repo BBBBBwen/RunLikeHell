@@ -1,12 +1,11 @@
 
 public class Roadblock {
 	private Cell currentCell;
-	private Grid grid;
 	private int health;
 	private boolean active;
 
-	public Roadblock(Grid g, int row, int col) throws Exception {
-		currentCell = grid.getCell(row, col);
+	public Roadblock(Grid g, Cell cell) {
+		currentCell = cell;
 		this.health = 4;
 		active = true;
 	}

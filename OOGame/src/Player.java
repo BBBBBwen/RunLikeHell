@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Player extends Moveable {
 	private boolean readyToStart = false;
 	private int presses = 0, energy = 200;
-	private int trapPut = 0;
 	private int roadblockPut = 0;
 	private ArrayList<Trap> traps = new ArrayList<Trap>();
 	private Roadblock[] roadblocks = new Roadblock[3];
+	private boolean canPutTrap = true, canPutBlock = true;
 
 	public Player(Grid g, int row, int col) throws Exception {
 		super(g);
@@ -25,6 +25,8 @@ public class Player extends Moveable {
 		} else if (presses == 3) {
 			energy -= 14;
 		}
+		clearPress();
+		allowPut();
 		return currentCell;
 	}
 
@@ -36,23 +38,41 @@ public class Player extends Moveable {
 		return energy;
 	}
 
+	public void eat() {
+		energy += 6;
+	}
+
 	public void addPress() {
 		if (presses < 3) {
 			presses += 1;
 		}
 	}
-	
+
 	public void clearPress() {
 		presses = 0;
 	}
 
 	public void putTrap() {
-		energy -= 50;
-		trapPut += 1;
+		if (canPutTrap) {
+			traps.add(new Trap(grid, currentCell));
+			energy -= 50;
+			canPutTrap = false;
+		}
 	}
 
 	public void putBlock() {
-		roadblockPut += 1;
+		if (canPutBlock) {
+			if (roadblockPut < 3) {
+				roadblocks[roadblockPut] = new Roadblock(grid, currentCell);
+				roadblockPut += 1;
+				canPutBlock = false;
+			}
+		}
+	}
+
+	public void allowPut() {
+		canPutTrap = true;
+		canPutBlock = true;
 	}
 
 	public int maxCellsPerMove() {
