@@ -111,6 +111,28 @@ public class BoardPanel extends JPanel implements KeyListener {
 		graphics.setColor(Color.white);
 		graphics.drawString("P", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 
+		for (Trap trap : player.getTrap()) {
+			if (trap.getState()) {
+				cell = trap.getCell();
+				graphics.setColor(Color.red);
+				graphics.fillOval(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
+						cellHeight * 3 / 4);
+				graphics.setColor(Color.white);
+				graphics.drawString("P", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+			}
+		}
+
+		for (Roadblock roadblock:player.getBlock()) {
+			if (roadblock.getState()) {
+				cell = roadblock.getCell();
+				graphics.setColor(Color.red);
+				graphics.fillOval(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
+						cellHeight * 3 / 4);
+				graphics.setColor(Color.white);
+				graphics.drawString("P", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+			}
+		}
+
 		if (monster.viewable()) {
 			cell = monster.getCell();
 			graphics.setColor(Color.black);

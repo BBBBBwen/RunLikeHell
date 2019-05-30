@@ -7,7 +7,7 @@ public class Player extends Moveable {
 	private int presses = 0, energy = 200;
 	private int roadblockPut = 0;
 	private ArrayList<Trap> traps = new ArrayList<Trap>();
-	private Roadblock[] roadblocks = new Roadblock[3];
+	private ArrayList<Roadblock> roadblocks = new ArrayList<Roadblock>();
 	private boolean canPutTrap = true, canPutBlock = true;
 
 	public Player(Grid g, int row, int col) throws Exception {
@@ -39,6 +39,14 @@ public class Player extends Moveable {
 	public int getEnergy() {
 		return energy;
 	}
+	
+	public ArrayList<Roadblock> getBlock() {
+		return roadblocks;
+	}
+	
+	public ArrayList<Trap> getTrap(){
+		return traps;
+	}
 
 	public void eat() {
 		energy += 6;
@@ -65,7 +73,7 @@ public class Player extends Moveable {
 	public void putBlock() {
 		if (canPutBlock) {
 			if (roadblockPut < 3) {
-				roadblocks[roadblockPut] = new Roadblock(grid, currentCell);
+				roadblocks.add(new Roadblock(grid, currentCell));
 				roadblockPut += 1;
 				canPutBlock = false;
 			}
