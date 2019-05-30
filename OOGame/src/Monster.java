@@ -32,11 +32,7 @@ public class Monster extends Moveable {
 		Cell p = player.getCell();
 		Cell m = currentCell;
 		if (Math.abs(p.col - m.col) > 4 || Math.abs(p.row - m.row) > 4) {
-			if ((count / countRange) % 2 == 0) {
-				canView = true;
-			} else {
 				canView = false;
-			}
 		} else {
 			canView = true;
 		}

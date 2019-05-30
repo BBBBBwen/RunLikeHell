@@ -53,7 +53,7 @@ public class Grid {
 				return map[cell.row - presses][cell.col];
 			return cell;
 		} else if (direction == 'D') {
-			if (cell.col % 5 == 0 && cell.row < 11 - presses)
+			if (cell.col % 5 == 0 && cell.row < 5 * multiplier + 6 - presses)
 				return map[cell.row + presses][cell.col];
 			return cell;
 		} else if (direction == 'L') {
@@ -61,7 +61,7 @@ public class Grid {
 				return map[cell.row][cell.col - presses];
 			return cell;
 		} else if (direction == 'R') {
-			if (cell.row % 5 == 0 && cell.col < 11 - presses)
+			if (cell.row % 5 == 0 && cell.col < 5 * multiplier + 6 - presses)
 				return map[cell.row][cell.col + presses];
 			return cell;
 		}
