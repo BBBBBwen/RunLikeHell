@@ -101,14 +101,6 @@ public class Player extends Moveable {
 		canPutBlock = true;
 	}
 
-	public int maxCellsPerMove() {
-		return 1;
-	}
-
-	public int pointsRemaining() {
-		return -1; // not implemented
-	}
-
 	public void setReady(boolean val) {
 		readyToStart = val;
 	}

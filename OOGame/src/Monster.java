@@ -23,31 +23,29 @@ public class Monster extends Moveable {
 	public Cell move(int presses) {
 		boolean gotStoped = false;
 		if (bornTime > 0) {
-			if (currentCell.row % 5 == 0 && currentCell.col % 5 == 0
-					&& (currentCell.row == player.getCell().row || currentCell.col == player.getCell().col)) {
-				currentCell = player.getCell();
-			} else {
-				for (int i = 0; i < player.getBlock().size(); ++i) {
-					if (player.getBlock().get(i).getHealth() == 0) {
-						player.getBlock().remove(i);
-					} else if (currentCell == player.getBlock().get(i).getCell()) {
-						player.getBlock().get(i).healthDec();
-						gotStoped = true;
-					}
+			for (int i = 0; i < player.getBlock().size(); ++i) {
+				if (player.getBlock().get(i).getHealth() == 0) {
+					player.getBlock().remove(i);
+				} else if (currentCell == player.getBlock().get(i).getCell()) {
+					player.getBlock().get(i).healthDec();
+					gotStoped = true;
 				}
-				for (int i = 0; i < player.getTrap().size(); ++i) {
-					if (currentCell == player.getTrap().get(i).getCell()) {
-						gotStoped = true;
-					}
+			}
+			for (int i = 0; i < player.getTrap().size(); ++i) {
+				if (currentCell == player.getTrap().get(i).getCell()) {
+					gotStoped = true;
 				}
-				if (gotStoped == false) {
-					if (player.getEnergy() < 100) {
-						currentDirection = grid.getBestDirection(currentCell, player.getCell());
-						currentCell = grid.getCell(getCell(), getDirection(), 3);
-					} else {
-						currentDirection = grid.getBestDirection(currentCell, player.getCell());
-						currentCell = grid.getCell(getCell(), getDirection(), 1);
-					}
+			}
+			if (gotStoped == false) {
+				if (currentCell.row % 5 == 0 && currentCell.col % 5 == 0
+						&& (currentCell.row == player.getCell().row || currentCell.col == player.getCell().col)) {
+					currentCell = player.getCell();
+				} else if (player.getEnergy() < 100) {
+					currentDirection = grid.getBestDirection(currentCell, player.getCell());
+					currentCell = grid.getCell(getCell(), getDirection(), 3);
+				} else {
+					currentDirection = grid.getBestDirection(currentCell, player.getCell());
+					currentCell = grid.getCell(getCell(), getDirection(), 1);
 				}
 			}
 		}
@@ -59,13 +57,13 @@ public class Monster extends Moveable {
 
 	public boolean viewable() // can be used for hiding
 	{
-		Cell p = player.getCell();
-		Cell m = currentCell;
-		if (bornTime > 0 && (Math.abs(p.col - m.col) > 4 || Math.abs(p.row - m.row) > 4)) {
-			canView = false;
-		} else {
-			canView = true;
-		}
+//		Cell p = player.getCell();
+//		Cell m = currentCell;
+//		if (bornTime > 0 && (Math.abs(p.col - m.col) > 4 || Math.abs(p.row - m.row) > 4)) {
+//			canView = false;
+//		} else {
+		canView = true;
+//		}
 		return canView;
 	}
 }

@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 public class Game extends JFrame {
 
-	private int timeAllowed = 100;
+	private int timeAllowed = 200;
 	private int score = 0;
 	private int difficulty = 1;
-	private int gameDelay = 1000;
+	private int gameDelay = 500;
 	private final int produceTime = 20;
 	private boolean checkGame = true;
 	private boolean isPause = false;
@@ -34,6 +34,11 @@ public class Game extends JFrame {
 	private Player player;
 	private ArrayList<Monster> monsters = new ArrayList<>();
 	private BoardPanel boardPanel;
+
+	public static void main(String args[]) throws Exception {
+		game = new Game();
+		game.gameStart();
+	}
 
 	/*
 	 * This constructor creates the main model objects and the panel used for UI. It
@@ -140,8 +145,8 @@ public class Game extends JFrame {
 				player.setDirection(' '); // reset to no direction
 				// update time and repaint
 				time++;
-				score++;
-				
+				score += (3 - difficulty) * (2 - (double)gameDelay / 1000);
+
 				if (time % produceTime == 0) {
 					Monster baby = new Monster(grid, player, MonstersCell.get(0).row, MonstersCell.get(0).col);
 					baby.isBaby = true;
@@ -152,7 +157,7 @@ public class Game extends JFrame {
 						monsters.remove(i);
 					}
 				}
-				
+
 				energyLabel.setText("Energy : " + player.getEnergy());
 				scoreLabel.setText("Score : " + score);
 				timeLabel.setText("Time Remaining : " + (timeAllowed - time));
@@ -166,11 +171,6 @@ public class Game extends JFrame {
 		userData.saveScore(score);
 		timeLabel.setText(message);
 		return message;
-	}
-
-	public static void main(String args[]) throws Exception {
-		game = new Game();
-		game.gameStart();
 	}
 
 	class MyActionListener implements ActionListener {
@@ -262,10 +262,10 @@ public class Game extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					boolean flag = userData.login(textField1.getText(), String.valueOf(passwordField.getPassword()));
 					if (flag) {
-						JOptionPane.showMessageDialog(button1, "Sucsuss");
+						JOptionPane.showMessageDialog(button1, "Login Successful");
 						dispose();
 					} else {
-						JOptionPane.showMessageDialog(button1, "fail");
+						JOptionPane.showMessageDialog(button1, "Login Fail");
 					}
 				}
 			});
@@ -310,9 +310,9 @@ public class Game extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					User user = new User(textField1.getText(), String.valueOf(passwordField.getPassword()));
 					if (userData.register(user))
-						JOptionPane.showMessageDialog(button1, "Sucsuss");
+						JOptionPane.showMessageDialog(button1, "Register Successful");
 					else
-						JOptionPane.showMessageDialog(button1, "Fail");
+						JOptionPane.showMessageDialog(button1, "Register Fail");
 					dispose();
 				}
 			});
@@ -379,11 +379,11 @@ public class Game extends JFrame {
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (easy.isSelected())
-						difficulty = 0;
+						difficulty = 2;
 					else if (normal.isSelected())
 						difficulty = 1;
 					else if (hard.isSelected())
-						difficulty = 2;
+						difficulty = 0;
 					if (gd1.isSelected())
 						timeAllowed = 100;
 					else if (gd2.isSelected())
