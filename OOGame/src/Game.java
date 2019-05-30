@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 /* This class is the main System level class which creates all the objects
  * representing the game logic (model) and the panel for user interaction.
@@ -14,6 +15,7 @@ public class Game extends JFrame {
 	private int score = 0;
 	private int difficulty = 1;
 	private int gameDelay = 1000;
+	private final int produceTime = 20;
 	private boolean checkGame = true;
 	private boolean isPause = false;
 	private JButton start = new JButton("Start"); /////////////////// all button starts here
@@ -30,8 +32,7 @@ public class Game extends JFrame {
 	private static Game game;
 	private Grid grid;
 	private Player player;
-	private Monster monster;
-	private BabyMonster babymonster;
+	private ArrayList<Monster> monsters = new ArrayList<>();
 	private BoardPanel boardPanel;
 
 	/*
@@ -42,9 +43,8 @@ public class Game extends JFrame {
 	public Game() throws Exception {
 		grid = new Grid(difficulty);
 		player = new Player(grid, 0, 0);
-		monster = new Monster(grid, player, 5, 5);
-		babymonster = new BabyMonster(grid, player, 0, 2);
-		boardPanel = new BoardPanel(grid, player, monster, babymonster);
+		monsters.add(new Monster(grid, player, 5, 5));
+		boardPanel = new BoardPanel(grid, player, monsters);
 		energyLabel = new JLabel("Score : " + player.getEnergy());
 
 		setTitle("RunLikeHell");
@@ -100,22 +100,23 @@ public class Game extends JFrame {
 		do {
 			play();
 			player.setReady(false);
-		}while(checkGame);
+		} while (checkGame);
 	}
-	
+
 	private void reset() throws Exception {
 		grid = new Grid(difficulty);
 		player = new Player(grid, 0, 0);
-		monster = new Monster(grid, player, 5, 5);
-		babymonster = new BabyMonster(grid, player, 0, 2);
-		boardPanel.reset(grid, player, monster, babymonster);
+		monsters.clear();
+		monsters.add(new Monster(grid, player, 5, 5));
+		boardPanel.reset(grid, player, monsters);
 		player.setReady(false);
 		boardPanel.repaint();
 	}
-	
-	public String play() {
+
+	public String play() throws Exception {
 		int time = 0;
 		boolean check = true;
+		boolean checkEaten = false;
 		String message;
 		player.setDirection(' '); // set to no direction
 		while (!player.isReady())
@@ -124,13 +125,25 @@ public class Game extends JFrame {
 			while (isPause)
 				delay(100);
 			Cell newPlayerCell = player.move(player.getPresses());
-			Cell newMonsterCell = monster.move(1);
-			Cell bb = babymonster.move(1);
-			if (newPlayerCell != monster.getCell() && newMonsterCell != player.getCell()) {
+			Cell firstMonsterCell = monsters.get(0).move(1);
+			ArrayList<Cell> MonstersCell = new ArrayList<>();
+			
+			for (Monster monster : monsters)
+				MonstersCell.add(monster.move(1));
+			for (int i = 0; i < monsters.size(); ++i)
+				if (newPlayerCell == monsters.get(i).getCell() && MonstersCell.get(i) == player.getCell())
+					checkEaten = true;
+			
+			if (!checkEaten) {
 				player.setDirection(' '); // reset to no direction
 				// update time and repaint
 				time++;
 				score++;
+				if (time % produceTime == 0) {
+					Monster baby = new Monster(grid, player, firstMonsterCell.row, firstMonsterCell.col);
+					baby.isBaby = true;
+					monsters.add(baby);
+				}
 				energyLabel.setText("Energy : " + player.getEnergy());
 				scoreLabel.setText("Score : " + score);
 				timeLabel.setText("Time Remaining : " + (timeAllowed - time));
@@ -138,6 +151,7 @@ public class Game extends JFrame {
 				boardPanel.repaint();
 			} else
 				check = false;
+			
 		} while (time < timeAllowed && check && player.isReady());
 		message = time < timeAllowed ? "Player Lost" : "Player Won"; // players has been eaten up
 		userData.saveScore(score);
@@ -184,43 +198,43 @@ public class Game extends JFrame {
 			}
 		}
 	}
-	
+
 	class Rank extends JFrame {
 		public Rank() {
-		setTitle("Rank");
-		Container container = getContentPane();
-		container.setLayout(null);
-		JLabel label1 = new JLabel("Name");
-		container.add(label1);
-		JLabel label2 = new JLabel("Score");
-		container.add(label2);
-		
-		User[] userList = userData.getList();
-		JLabel[] nameList = new JLabel[userList.length];
-		JLabel[] scoreList = new JLabel[userList.length];
-		for(int i = 0;i < userList.length; ++i) {
-			nameList[i] = new JLabel(userList[i].getUserName());
-			scoreList[i] = new JLabel("" + userList[i].getScore());
-			container.add(nameList[i]);
-			container.add(scoreList[i]);
-		}
-		container.setLayout(new GridLayout(userList.length + 2,3,40,40));
-		JButton button = new JButton("Confirm");
-		button.setSize(20, 20);
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					dispose();
+			setTitle("Rank");
+			Container container = getContentPane();
+			container.setLayout(null);
+			JLabel label1 = new JLabel("Name");
+			container.add(label1);
+			JLabel label2 = new JLabel("Score");
+			container.add(label2);
+
+			User[] userList = userData.getList();
+			JLabel[] nameList = new JLabel[userList.length];
+			JLabel[] scoreList = new JLabel[userList.length];
+			for (int i = 0; i < userList.length; ++i) {
+				nameList[i] = new JLabel(userList[i].getUserName());
+				scoreList[i] = new JLabel("" + userList[i].getScore());
+				container.add(nameList[i]);
+				container.add(scoreList[i]);
 			}
-		});
-	
-		container.add(button);
-		setBounds(0, 0, 300, 300);
-		setAlwaysOnTop(true);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setVisible(true);
-	}
+			container.setLayout(new GridLayout(userList.length + 2, 3, 40, 40));
+			JButton button = new JButton("Confirm");
+			button.setSize(20, 20);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
+
+			container.add(button);
+			setBounds(0, 0, 300, 300);
+			setAlwaysOnTop(true);
+			setResizable(false);
+			setLocationRelativeTo(null);
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setVisible(true);
+		}
 	}
 
 	class Login extends JFrame {

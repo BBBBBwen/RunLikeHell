@@ -1,32 +1,30 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 public class BoardPanel extends JPanel implements KeyListener {
 	private Player player;
-	private Monster monster;
-	private BabyMonster babymonster;
+	private ArrayList<Monster> monsters;
 	private Grid grid;
 	private final int cellWidth = 35;
 	private final int cellHeight = 35;
 	private final int Lmargin = 100;
 	private final int Tmargin = 40;
 
-	public BoardPanel(Grid grid, Player player, Monster monster, BabyMonster babymonster) {
+	public BoardPanel(Grid grid, Player player, ArrayList<Monster> monsters) {
 		this.player = player;
 		this.grid = grid;
-		this.monster = monster;
-		this.babymonster = babymonster;
+		this.monsters = monsters;
 
 	}
 
-	public void reset(Grid grid, Player player, Monster monster, BabyMonster babymonster) {
+	public void reset(Grid grid, Player player, ArrayList<Monster> monsters) {
 		this.player = player;
 		this.grid = grid;
-		this.monster = monster;
-		this.babymonster = babymonster;
+		this.monsters = monsters;
 	}
 
 	/* responds to various Keyboard pressed */
@@ -122,7 +120,7 @@ public class BoardPanel extends JPanel implements KeyListener {
 			}
 		}
 
-		for (Roadblock roadblock:player.getBlock()) {
+		for (Roadblock roadblock : player.getBlock()) {
 			if (roadblock.getState()) {
 				cell = roadblock.getCell();
 				graphics.setColor(Color.red);
@@ -132,19 +130,20 @@ public class BoardPanel extends JPanel implements KeyListener {
 				graphics.drawString("P", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 			}
 		}
-
-		if (monster.viewable()) {
+		for (Monster monster : monsters) {
 			cell = monster.getCell();
-			graphics.setColor(Color.black);
-			graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
-			graphics.setColor(Color.white);
-			graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+			if (monster.viewable() && !monster.isBaby()) {
+				graphics.setColor(Color.black);
+				graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
+				graphics.setColor(Color.white);
+				graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+			} else if (monster.viewable() && monster.isBaby()) {
+				graphics.setColor(Color.yellow);
+				graphics.fillOval(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
+						cellHeight * 3 / 4);
+				graphics.setColor(Color.white);
+				graphics.drawString("B", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+			}
 		}
-
-		cell = babymonster.getCell();
-		graphics.setColor(Color.yellow);
-		graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
-		graphics.setColor(Color.white);
-		graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 	}
 }
