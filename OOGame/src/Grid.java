@@ -24,9 +24,9 @@ public class Grid {
 				if ((i % 5 == 0) || (j % 5 == 0 && i % 5 != 0)) {
 					map[i][j] = new Cell(i, j);
 					road[k++] = map[i][j];
-					if(j % 5 == 0 && i % 5 == 0)
+					if (j % 5 == 0 && i % 5 == 0)
 						map[i][j].gotGold = true;
-				}else
+				} else
 					map[i][j] = null;
 	}
 

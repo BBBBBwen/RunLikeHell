@@ -148,7 +148,7 @@ public class Game extends JFrame {
 				player.setDirection(' '); // reset to no direction
 				// update time and repaint
 				time++;
-				score += (3 - difficulty) * (2 - (double)gameDelay / 1000);
+				score += (3 - difficulty) * (2 - (double) gameDelay / 1000);
 
 				if (time % produceTime == 0) {
 					Monster baby = new Monster(grid, player, MonstersCell.get(0).row, MonstersCell.get(0).col);
@@ -387,7 +387,7 @@ public class Game extends JFrame {
 			group4.add(pe1);
 			group4.add(pe2);
 			group4.add(pe3);
-			
+
 			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -449,12 +449,12 @@ public class Game extends JFrame {
 			container.add(gf1);
 			container.add(gf2);
 			container.add(gf3);
-			
+
 			container.add(playerEnergy);
 			container.add(pe1);
 			container.add(pe2);
 			container.add(pe3);
-			
+
 			container.add(button1);
 			container.add(button2);
 			this.add(container);

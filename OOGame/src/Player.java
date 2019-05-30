@@ -54,7 +54,7 @@ public class Player extends Moveable {
 	public int getPresses() {
 		return presses;
 	}
-	
+
 	public void setEnergy(int energy) {
 		this.energy = energy;
 	}
