@@ -21,7 +21,13 @@ public class Player extends Moveable {
 		if ((presses == 1 && energy >= 2) || (presses == 2 && energy >= 6) || (presses == 3 && energy >= 14)) {
 			canMove = true;
 		}
-
+		if (getTrap().size() > 0)
+			for (int i = 0; i < getTrap().size(); ++i) {
+				getTrap().get(i).decTime();
+				if (getTrap().get(i).getTime() == 0) {
+					getTrap().remove(i);
+				}
+			}
 		if (canMove) {
 			currentCell = grid.getCell(currentCell, currentDirection, presses);
 			if (currentCell.gotGold) {

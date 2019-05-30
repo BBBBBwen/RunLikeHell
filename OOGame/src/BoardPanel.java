@@ -119,22 +119,20 @@ public class BoardPanel extends JPanel implements KeyListener {
 		for (Trap trap : player.getTrap()) {
 			if (trap.getState()) {
 				cell = trap.getCell();
-				graphics.setColor(Color.red);
-				graphics.fillOval(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
-						cellHeight * 3 / 4);
+				graphics.setColor(Color.green);
+				graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
 				graphics.setColor(Color.white);
-				graphics.drawString("P", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+				graphics.drawString("T", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 			}
 		}
 
 		for (Roadblock roadblock : player.getBlock()) {
 			if (roadblock.getState()) {
 				cell = roadblock.getCell();
-				graphics.setColor(Color.red);
-				graphics.fillOval(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
-						cellHeight * 3 / 4);
+				graphics.setColor(Color.blue);
+				graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
 				graphics.setColor(Color.white);
-				graphics.drawString("P", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+				graphics.drawString("B", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 			}
 		}
 		for (Monster monster : monsters) {

@@ -21,20 +21,34 @@ public class Monster extends Moveable {
 	}
 
 	public Cell move(int presses) {
+		boolean gotStoped = false;
 		if (bornTime > 0) {
 			if (currentCell.row % 5 == 0 && currentCell.col % 5 == 0
-					&& (currentCell.row == player.getCell().row || currentCell.col == player.getCell().col))
+					&& (currentCell.row == player.getCell().row || currentCell.col == player.getCell().col)) {
 				currentCell = player.getCell();
-			else if (player.getEnergy() < 100) {
-				currentDirection = grid.getBestDirection(currentCell, player.getCell());
-				currentCell = grid.getCell(getCell(), getDirection(), 3);
-
-			}
-
-			else {
-
-				currentDirection = grid.getBestDirection(currentCell, player.getCell());
-				currentCell = grid.getCell(getCell(), getDirection(), 1);
+			} else {
+				for (int i = 0; i < player.getBlock().size(); ++i) {
+					if (player.getBlock().get(i).getHealth() == 0) {
+						player.getBlock().remove(i);
+					} else if (currentCell == player.getBlock().get(i).getCell()) {
+						player.getBlock().get(i).healthDec();
+						gotStoped = true;
+					}
+				}
+				for (int i = 0; i < player.getTrap().size(); ++i) {
+					if (currentCell == player.getTrap().get(i).getCell()) {
+						gotStoped = true;
+					}
+				}
+				if (gotStoped == false) {
+					if (player.getEnergy() < 100) {
+						currentDirection = grid.getBestDirection(currentCell, player.getCell());
+						currentCell = grid.getCell(getCell(), getDirection(), 3);
+					} else {
+						currentDirection = grid.getBestDirection(currentCell, player.getCell());
+						currentCell = grid.getCell(getCell(), getDirection(), 1);
+					}
+				}
 			}
 		}
 		bornTime++;

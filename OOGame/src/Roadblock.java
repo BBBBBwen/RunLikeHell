@@ -22,10 +22,6 @@ public class Roadblock {
 		health -= 1;
 	}
 
-	public void deactivate() {
-		active = false;
-	}
-
 	public void setCell(Cell c) {
 		currentCell = c;
 	}
