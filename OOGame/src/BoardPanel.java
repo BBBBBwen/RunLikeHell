@@ -7,16 +7,19 @@ import javax.swing.*;
 public class BoardPanel extends JPanel implements KeyListener {
 	private Player player;
 	private Monster monster;
+	private BabyMonster babymonster;
 	private Grid grid;
 	private final int cellWidth = 35;
 	private final int cellHeight = 35;
 	private final int Lmargin = 100;
 	private final int Tmargin = 40;
 
-	public BoardPanel(Grid grid, Player player, Monster monster) {
+	public BoardPanel(Grid grid, Player player, Monster monster, BabyMonster babymonster) {
 		this.player = player;
 		this.grid = grid;
 		this.monster = monster;
+		this.babymonster = babymonster;
+		
 	}
 	
 	public void setGrid(Grid grid) {
@@ -85,5 +88,11 @@ public class BoardPanel extends JPanel implements KeyListener {
 			graphics.setColor(Color.white);
 			graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 		}
+		
+		cell = babymonster.getCell();
+		graphics.setColor(Color.yellow);
+		graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
+		graphics.setColor(Color.white);
+		graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 	}
 }

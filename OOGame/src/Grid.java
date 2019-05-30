@@ -10,6 +10,7 @@ public class Grid {
 	private int mapSize;// column
 	private Cell player;
 	private Cell monster;
+	private Cell babymonster;
 	private Cell road[];//////////// roads
 	private Cell map[][];///////// whole map
 

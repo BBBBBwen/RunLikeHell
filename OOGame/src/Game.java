@@ -28,6 +28,7 @@ public class Game extends JFrame {
 	private Grid grid;
 	private Player player;
 	private Monster monster;
+	private BabyMonster babymonster;
 	private BoardPanel boardPanel;
 
 	/*
@@ -39,7 +40,8 @@ public class Game extends JFrame {
 		grid = new Grid(difficulty);
 		player = new Player(grid, 0, 0);
 		monster = new Monster(grid, player, 5, 5);
-		boardPanel = new BoardPanel(grid, player, monster);
+		babymonster = new BabyMonster(grid, player, 0, 2);
+		boardPanel = new BoardPanel(grid, player, monster, babymonster);
 
 		setTitle("RunLikeHell");
 		setSize((int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25)));
@@ -100,6 +102,7 @@ public class Game extends JFrame {
 				delay(100);
 			Cell newPlayerCell = player.move();
 			Cell newMonsterCell = monster.move();
+			Cell bb = babymonster.move();
 			if (newPlayerCell != monster.getCell() && newMonsterCell != player.getCell()) {
 				player.setDirection(' '); // reset to no direction
 				// update time and repaint
@@ -314,9 +317,9 @@ public class Game extends JFrame {
 			JRadioButton gf2 = new JRadioButton("0.5s/m");
 			JRadioButton gf3 = new JRadioButton("1s/m");
 			ButtonGroup group3 = new ButtonGroup();
-			group3.add(gd1);
-			group3.add(gd2);
-			group3.add(gd3);
+			group3.add(gf1);
+			group3.add(gf2);
+			group3.add(gf3);
 
 			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
