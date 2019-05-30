@@ -141,13 +141,14 @@ public class BoardPanel extends JPanel implements KeyListener {
 			cell = monster.getCell();
 			if (monster.viewable() && !monster.isBaby()) {
 				graphics.setColor(Color.black);
-				graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
+				graphics.fill3DRect(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
+						cellHeight * 3 / 4, true);
 				graphics.setColor(Color.white);
 				graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 			} else if (monster.viewable() && monster.isBaby()) {
 				graphics.setColor(Color.yellow);
-				graphics.fillOval(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
-						cellHeight * 3 / 4);
+				graphics.fill3DRect(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
+						cellHeight * 3 / 4, true);
 				graphics.setColor(Color.white);
 				graphics.drawString("B", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 			}
