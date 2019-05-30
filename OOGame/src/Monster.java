@@ -40,9 +40,6 @@ public class Monster extends Moveable {
 				if (currentCell.row % 5 == 0 && currentCell.col % 5 == 0
 						&& (currentCell.row == player.getCell().row || currentCell.col == player.getCell().col)) {
 					currentCell = player.getCell();
-				} else if (player.getEnergy() < 100) {
-					currentDirection = grid.getBestDirection(currentCell, player.getCell());
-					currentCell = grid.getCell(getCell(), getDirection(), 3);
 				} else {
 					currentDirection = grid.getBestDirection(currentCell, player.getCell());
 					currentCell = grid.getCell(getCell(), getDirection(), 1);

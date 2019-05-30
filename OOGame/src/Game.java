@@ -15,6 +15,7 @@ public class Game extends JFrame {
 	private int score = 0;
 	private int difficulty = 1;
 	private int gameDelay = 500;
+	private int energy = 200;
 	private final int produceTime = 20;
 	private boolean checkGame = true;
 	private boolean isPause = false;
@@ -50,7 +51,7 @@ public class Game extends JFrame {
 		player = new Player(grid, 0, 0);
 		monsters.add(new Monster(grid, player, 5, 5));
 		boardPanel = new BoardPanel(grid, player, monsters);
-		energyLabel = new JLabel("Score : " + player.getEnergy());
+		energyLabel = new JLabel("Energy : " + player.getEnergy());
 
 		setTitle("RunLikeHell");
 		setSize((int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25)));
@@ -115,6 +116,7 @@ public class Game extends JFrame {
 		monsters.add(new Monster(grid, player, 5, 5));
 		boardPanel.reset(grid, player, monsters);
 		player.setReady(false);
+		player.setEnergy(energy);
 		score = 0;
 		boardPanel.repaint();
 	}
@@ -347,8 +349,8 @@ public class Game extends JFrame {
 
 			JLabel gameDifficulty = new JLabel("Game Difficulty");
 			gameDifficulty.setBounds(10, 10, 200, 18);
-			JRadioButton easy = new JRadioButton("Easy", true);
-			JRadioButton normal = new JRadioButton("Normal");
+			JRadioButton easy = new JRadioButton("Easy");
+			JRadioButton normal = new JRadioButton("Normal", true);
 			JRadioButton hard = new JRadioButton("Hard");
 			ButtonGroup group1 = new ButtonGroup();
 			group1.add(easy);
@@ -357,8 +359,8 @@ public class Game extends JFrame {
 
 			JLabel gameDuration = new JLabel("Game Duration");
 			gameDuration.setBounds(10, 50, 200, 18);
-			JRadioButton gd1 = new JRadioButton("100", true);
-			JRadioButton gd2 = new JRadioButton("200");
+			JRadioButton gd1 = new JRadioButton("100");
+			JRadioButton gd2 = new JRadioButton("200", true);
 			JRadioButton gd3 = new JRadioButton("300");
 			ButtonGroup group2 = new ButtonGroup();
 			group2.add(gd1);
@@ -367,14 +369,24 @@ public class Game extends JFrame {
 
 			JLabel gameFrequency = new JLabel("Game Frequency");
 			gameFrequency.setBounds(10, 100, 200, 18);
-			JRadioButton gf1 = new JRadioButton("0.2s/m", true);
-			JRadioButton gf2 = new JRadioButton("0.5s/m");
+			JRadioButton gf1 = new JRadioButton("0.2s/m");
+			JRadioButton gf2 = new JRadioButton("0.5s/m", true);
 			JRadioButton gf3 = new JRadioButton("1s/m");
 			ButtonGroup group3 = new ButtonGroup();
 			group3.add(gf1);
 			group3.add(gf2);
 			group3.add(gf3);
 
+			JLabel playerEnergy = new JLabel("Player Energy");
+			playerEnergy.setBounds(10, 100, 200, 18);
+			JRadioButton pe1 = new JRadioButton("40E");
+			JRadioButton pe2 = new JRadioButton("200E", true);
+			JRadioButton pe3 = new JRadioButton("1000E");
+			ButtonGroup group4 = new ButtonGroup();
+			group4.add(pe1);
+			group4.add(pe2);
+			group4.add(pe3);
+			
 			final JButton button1 = new JButton("Confirm");
 			button1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -396,6 +408,12 @@ public class Game extends JFrame {
 						gameDelay = 500;
 					else if (gf3.isSelected())
 						gameDelay = 1000;
+					if (pe1.isSelected())
+						energy = 40;
+					else if (pe2.isSelected())
+						energy = 200;
+					else if (pe3.isSelected())
+						energy = 1000;
 					game.setSize((int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25)));
 					try {
 						reset();
@@ -430,7 +448,12 @@ public class Game extends JFrame {
 			container.add(gf1);
 			container.add(gf2);
 			container.add(gf3);
-
+			
+			container.add(playerEnergy);
+			container.add(pe1);
+			container.add(pe2);
+			container.add(pe3);
+			
 			container.add(button1);
 			container.add(button2);
 			this.add(container);
