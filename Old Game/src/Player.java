@@ -1,6 +1,7 @@
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class Player implements KeyListener {
 	private char keypress;
@@ -8,7 +9,7 @@ public class Player implements KeyListener {
 	private int xCor, yCor, energy;
 	private int trapPut = 0;
 	private int roadblockPut = 0;
-	private Trap[] traps = new Trap[99];
+	private ArrayList<Trap> traps = new ArrayList<Trap>();
 	private Roadblock[] roadblocks = new Roadblock[3];
 	private int presses = 0;
 

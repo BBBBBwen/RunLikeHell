@@ -45,24 +45,24 @@ public class Grid {
 	 * direction must be either 'R', 'L', 'U', 'D' or ' '. A null value will be
 	 * returned if attempt to get a non-existent cell.
 	 */
-	public Cell getCell(Cell cell, char direction) {
+	public Cell getCell(Cell cell, char direction, int presses) {
 		if (direction == ' ')
 			return cell;
 		if (direction == 'U') {
-			if (cell.col % 5 == 0 && cell.row > 0)
-				return map[cell.row - 1][cell.col];
+			if (cell.col % 5 == 0 && cell.row > -1 + presses)
+				return map[cell.row - presses][cell.col];
 			return cell;
 		} else if (direction == 'D') {
-			if (cell.col % 5 == 0 && cell.row < 10)
-				return map[cell.row + 1][cell.col];
+			if (cell.col % 5 == 0 && cell.row < 11 - presses)
+				return map[cell.row + presses][cell.col];
 			return cell;
 		} else if (direction == 'L') {
-			if (cell.row % 5 == 0 && cell.col > 0)
-				return map[cell.row][cell.col - 1];
+			if (cell.row % 5 == 0 && cell.col > -1 + presses)
+				return map[cell.row][cell.col - presses];
 			return cell;
 		} else if (direction == 'R') {
-			if (cell.row % 5 == 0 && cell.col < 10)
-				return map[cell.row][cell.col + 1];
+			if (cell.row % 5 == 0 && cell.col < 11 - presses)
+				return map[cell.row][cell.col + presses];
 			return cell;
 		}
 		return null;

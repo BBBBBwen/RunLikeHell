@@ -7,10 +7,10 @@ public class BabyMonster extends Moveable {
 		player = p;
 		setCell(grid.getCell(row,col));
 	}
-	public Cell move()
+	public Cell move(int presses)
 	{
 		currentDirection = grid.getBestDirection(currentCell, player.getCell());
-        currentCell = (grid.getCell(getCell(),getDirection()));
+        currentCell = (grid.getCell(getCell(),getDirection(), 1));
         return currentCell;
 	}
 

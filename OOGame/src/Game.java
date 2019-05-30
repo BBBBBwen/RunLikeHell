@@ -100,9 +100,9 @@ public class Game extends JFrame {
 		do {
 			while (isPause)
 				delay(100);
-			Cell newPlayerCell = player.move();
-			Cell newMonsterCell = monster.move();
-			Cell bb = babymonster.move();
+			Cell newPlayerCell = player.move(player.getPresses());
+			Cell newMonsterCell = monster.move(1);
+			Cell bb = babymonster.move(1);
 			if (newPlayerCell != monster.getCell() && newMonsterCell != player.getCell()) {
 				player.setDirection(' '); // reset to no direction
 				// update time and repaint

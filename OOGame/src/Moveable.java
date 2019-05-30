@@ -32,5 +32,5 @@ public abstract class Moveable {
       return currentCell;
    }
 
-   public abstract Cell move();
+   public abstract Cell move(int presses);
 }

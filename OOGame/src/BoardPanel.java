@@ -19,23 +19,44 @@ public class BoardPanel extends JPanel implements KeyListener {
 		this.grid = grid;
 		this.monster = monster;
 		this.babymonster = babymonster;
-		
+
 	}
-	
+
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
+
 	/* responds to various Keyboard pressed */
 	@Override
 	public void keyPressed(KeyEvent ke) {
-		if (ke.getKeyCode() == KeyEvent.VK_LEFT)
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
+			if (player.getDirection() != 'L') {
+				player.clearPress();
+			}
 			player.setDirection('L');
-		if (ke.getKeyCode() == KeyEvent.VK_RIGHT)
+			player.addPress();
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+			if (player.getDirection() != 'R') {
+				player.clearPress();
+			}
 			player.setDirection('R');
-		if (ke.getKeyCode() == KeyEvent.VK_UP)
+			player.addPress();
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_UP) {
+			if (player.getDirection() != 'U') {
+				player.clearPress();
+			}
 			player.setDirection('U');
-		if (ke.getKeyCode() == KeyEvent.VK_DOWN)
+			player.addPress();
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_DOWN) {
+			if (player.getDirection() != 'D') {
+				player.clearPress();
+			}
 			player.setDirection('D');
+			player.addPress();
+		}
 	}
 
 	@Override
@@ -88,7 +109,7 @@ public class BoardPanel extends JPanel implements KeyListener {
 			graphics.setColor(Color.white);
 			graphics.drawString("M", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
 		}
-		
+
 		cell = babymonster.getCell();
 		graphics.setColor(Color.yellow);
 		graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
