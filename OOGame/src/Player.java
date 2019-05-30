@@ -18,22 +18,25 @@ public class Player extends Moveable {
 
 	public Cell move(int presses) {
 		boolean canMove = false;
-		if (presses == 1 && energy >= 2) {
-			energy -= 2;
-			canMove = true;
-		} else if (presses == 2 && energy >= 6) {
-			energy -= 6;
-			canMove = true;
-		} else if (presses == 3 && energy >= 14) {
-			energy -= 14;
+		if ((presses == 1 && energy >= 2) || (presses == 2 && energy >= 6) || (presses == 3 && energy >= 14)) {
 			canMove = true;
 		}
+
 		if (canMove) {
 			currentCell = grid.getCell(currentCell, currentDirection, presses);
-			if (presses != 0) {
-				allowPut();
+
+			if (presses == 1) {
+				energy -= 2;
+			} else if (presses == 2) {
+				energy -= 6;
+			} else if (presses == 3) {
+				energy -= 14;
 			}
 		}
+		if (presses != 0) {
+			allowPut();
+		}
+
 		clearPress();
 		return currentCell;
 	}
