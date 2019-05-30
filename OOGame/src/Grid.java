@@ -8,9 +8,6 @@ public class Grid {
 	private int multiplier;
 	private int roadSize;
 	private int mapSize;// column
-	private Cell player;
-	private Cell monster;
-	private Cell babymonster;
 	private Cell road[];//////////// roads
 	private Cell map[][];///////// whole map
 
@@ -26,7 +23,9 @@ public class Grid {
 				if ((i % 5 == 0) || (j % 5 == 0 && i % 5 != 0)) {
 					map[i][j] = new Cell(i, j);
 					road[k++] = map[i][j];
-				} else
+					if(j % 5 == 0 && i % 5 == 0)
+						map[i][j].gotGold = true;
+				}else
 					map[i][j] = null;
 	}
 

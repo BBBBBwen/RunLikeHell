@@ -24,7 +24,10 @@ public class Player extends Moveable {
 
 		if (canMove) {
 			currentCell = grid.getCell(currentCell, currentDirection, presses);
-
+			if (currentCell.gotGold) {
+				energy += 6;
+				currentCell.gotGold = false;
+			}
 			if (presses == 1) {
 				energy -= 2;
 			} else if (presses == 2) {

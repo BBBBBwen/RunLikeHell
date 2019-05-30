@@ -101,6 +101,13 @@ public class BoardPanel extends JPanel implements KeyListener {
 			graphics.fillRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
 			graphics.setColor(Color.black);
 			graphics.drawRect(xCor(cell.col), yCor(cell.row), cellWidth, cellHeight);
+			if (cell.gotGold) {
+				graphics.setColor(Color.MAGENTA);
+				graphics.fillArc(xCor(cell.col) + cellWidth / 8, yCor(cell.row) + cellHeight / 8, cellWidth * 3 / 4,
+						cellHeight * 3 / 4, 45, 45);
+				graphics.setColor(Color.white);
+				graphics.drawString("G", xCor(cell.col) + cellWidth / 3, yCor(cell.row) + 2 * cellWidth / 3);
+			}
 		}
 		cell = player.getCell();
 		graphics.setColor(Color.red);
