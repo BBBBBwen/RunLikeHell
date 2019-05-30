@@ -89,7 +89,30 @@ public class Game extends JFrame {
 	 * which it updates the moves in turn until time runs out (player won) or player
 	 * is eaten up (player lost).
 	 */
-
+	public void gameStart() throws Exception {
+		String answer = "";
+		boolean check = true;
+		do {
+			play();
+			int confirm = JOptionPane.showConfirmDialog(null, "game is over, wanna restart?", answer, JOptionPane.YES_NO_CANCEL_OPTION);
+			if(confirm == JOptionPane.NO_OPTION) {
+				check = false;
+			}else {
+				player.setReady(false);
+				reset();
+			}
+		}while(check);
+	}
+	
+	private void reset() throws Exception {
+		player.setReady(false);
+		grid = new Grid(difficulty);
+		player = new Player(grid, 0, 0);
+		monster = new Monster(grid, player, 5, 5);
+		babymonster = new BabyMonster(grid, player, 0, 2);
+		boardPanel.reset(grid, player, monster, babymonster);
+		boardPanel.repaint();
+	}
 	public String play() {
 		int time = 0;
 		boolean check = true;
@@ -123,7 +146,7 @@ public class Game extends JFrame {
 
 	public static void main(String args[]) throws Exception {
 		game = new Game();
-		game.play();
+		game.gameStart();
 	}
 
 	class MyActionListener implements ActionListener {
@@ -343,7 +366,11 @@ public class Game extends JFrame {
 					else if (gf3.isSelected())
 						gameDelay = 1000;
 					game.setSize((int) (640 * (1 + difficulty * 0.25)), (int) (480 * (1 + difficulty * 0.25)));
-					boardPanel.setGrid(new Grid(difficulty));
+					try {
+						reset();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 					dispose();
 				}
 			});

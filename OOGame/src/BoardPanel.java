@@ -22,8 +22,11 @@ public class BoardPanel extends JPanel implements KeyListener {
 
 	}
 
-	public void setGrid(Grid grid) {
+	public void reset(Grid grid, Player player, Monster monster, BabyMonster babymonster) {
+		this.player = player;
 		this.grid = grid;
+		this.monster = monster;
+		this.babymonster = babymonster;
 	}
 
 	/* responds to various Keyboard pressed */
