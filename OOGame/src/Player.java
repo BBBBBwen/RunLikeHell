@@ -25,8 +25,10 @@ public class Player extends Moveable {
 		} else if (presses == 3) {
 			energy -= 14;
 		}
+		if (presses != 0) {
+			allowPut();
+		}
 		clearPress();
-		allowPut();
 		return currentCell;
 	}
 
