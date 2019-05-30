@@ -54,13 +54,13 @@ public class Monster extends Moveable {
 
 	public boolean viewable() // can be used for hiding
 	{
-//		Cell p = player.getCell();
-//		Cell m = currentCell;
-//		if (bornTime > 0 && (Math.abs(p.col - m.col) > 4 || Math.abs(p.row - m.row) > 4)) {
-//			canView = false;
-//		} else {
+		Cell p = player.getCell();
+		Cell m = currentCell;
+		if (bornTime > 0 && (Math.abs(p.col - m.col) > 4 || Math.abs(p.row - m.row) > 4)) {
+			canView = false;
+		} else {
 		canView = true;
-//		}
+		}
 		return canView;
 	}
 }
