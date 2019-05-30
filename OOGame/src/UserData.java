@@ -55,7 +55,7 @@ public class UserData {
 		ArrayList<User> usersTemp = users;
 		for (int i = 0; i < usersTemp.size() - 1; ++i) {
 			for (int j = i; j < usersTemp.size() - 1 - i; ++j) {
-				if (usersTemp.get(j).getScore() > usersTemp.get(j + 1).getScore()) {
+				if (usersTemp.get(j).getScore() < usersTemp.get(j + 1).getScore()) {
 					User temp = usersTemp.get(j);
 					usersTemp.set(j, usersTemp.get(j + 1));
 					usersTemp.set(j + 1, temp);

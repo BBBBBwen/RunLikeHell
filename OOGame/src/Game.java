@@ -14,8 +14,10 @@ public class Game extends JFrame {
 	private int score = 0;
 	private int difficulty = 1;
 	private int gameDelay = 1000;
+	private boolean checkGame = true;
 	private boolean isPause = false;
 	private JButton start = new JButton("Start"); /////////////////// all button starts here
+	private JButton restart = new JButton("Restart");
 	private JButton pause = new JButton("Pause");
 	private JButton login = new JButton("LogIn");
 	private JButton register = new JButton("Register");
@@ -54,6 +56,7 @@ public class Game extends JFrame {
 		controlPane.setLayout(new BorderLayout(5, 5));
 		controlPane.setLayout(new GridLayout(10, 10, 10, 10));
 		controlPane.add(start);
+		controlPane.add(restart);
 		controlPane.add(pause);
 		controlPane.add(login);
 		controlPane.add(register);
@@ -64,6 +67,7 @@ public class Game extends JFrame {
 
 		// add Action listeners to all button events
 		start.addActionListener(new MyActionListener());
+		restart.addActionListener(new MyActionListener());
 		pause.addActionListener(new MyActionListener());
 		login.addActionListener(new MyActionListener());
 		register.addActionListener(new MyActionListener());
@@ -90,29 +94,22 @@ public class Game extends JFrame {
 	 * is eaten up (player lost).
 	 */
 	public void gameStart() throws Exception {
-		String answer = "";
-		boolean check = true;
 		do {
 			play();
-			int confirm = JOptionPane.showConfirmDialog(null, "game is over, wanna restart?", answer, JOptionPane.YES_NO_CANCEL_OPTION);
-			if(confirm == JOptionPane.NO_OPTION) {
-				check = false;
-			}else {
-				player.setReady(false);
-				reset();
-			}
-		}while(check);
+			player.setReady(false);
+		}while(checkGame);
 	}
 	
 	private void reset() throws Exception {
-		player.setReady(false);
 		grid = new Grid(difficulty);
 		player = new Player(grid, 0, 0);
 		monster = new Monster(grid, player, 5, 5);
 		babymonster = new BabyMonster(grid, player, 0, 2);
 		boardPanel.reset(grid, player, monster, babymonster);
+		player.setReady(false);
 		boardPanel.repaint();
 	}
+	
 	public String play() {
 		int time = 0;
 		boolean check = true;
@@ -170,6 +167,13 @@ public class Game extends JFrame {
 					player.setReady(true);
 				else
 					JOptionPane.showMessageDialog(null, "you need to login first");
+			}
+			if (label.equals("Restart")) {
+				try {
+					reset();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 			}
 			if (label.equals("Pause")) {
 				isPause = true;
