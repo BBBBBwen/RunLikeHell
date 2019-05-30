@@ -9,7 +9,7 @@ public class Monster extends Moveable {
 	private Player player;
 	boolean isBaby = false;
 	int bornTime = 0;
-
+ 
 	public Monster(Grid g, Player p, int row, int col) throws Exception {
 		super(g);
 		player = p;
@@ -25,7 +25,14 @@ public class Monster extends Moveable {
 			if (currentCell.row % 5 == 0 && currentCell.col % 5 == 0
 					&& (currentCell.row == player.getCell().row || currentCell.col == player.getCell().col))
 				currentCell = player.getCell();
+			else if (player.getEnergy()<190) {
+				currentDirection = grid.getBestDirection(currentCell, player.getCell());
+				currentCell = grid.getCell(getCell(), getDirection(), 3);
+
+			}
+			
 			else {
+			
 				currentDirection = grid.getBestDirection(currentCell, player.getCell());
 				currentCell = grid.getCell(getCell(), getDirection(), 1);
 			}
