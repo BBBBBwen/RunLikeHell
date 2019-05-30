@@ -110,6 +110,7 @@ public class Game extends JFrame {
 		monsters.add(new Monster(grid, player, 5, 5));
 		boardPanel.reset(grid, player, monsters);
 		player.setReady(false);
+		score = 0;
 		boardPanel.repaint();
 	}
 
@@ -125,22 +126,23 @@ public class Game extends JFrame {
 			while (isPause)
 				delay(100);
 			Cell newPlayerCell = player.move(player.getPresses());
-			Cell firstMonsterCell = monsters.get(0).move(1);
 			ArrayList<Cell> MonstersCell = new ArrayList<>();
-			
-			for (int i = 1;i < monsters.size(); ++i)
-				MonstersCell.add(monsters.get(i).move(1));
+
 			for (int i = 0; i < monsters.size(); ++i)
-				if (newPlayerCell == monsters.get(i).getCell() && MonstersCell.get(i) == player.getCell())
+				MonstersCell.add(monsters.get(i).move(1));
+			for (int i = 0; i < monsters.size(); ++i) {
+				if (newPlayerCell == monsters.get(i).getCell() && MonstersCell.get(i) == player.getCell()) {
 					checkEaten = true;
-			
+				}
+			}
+
 			if (!checkEaten) {
 				player.setDirection(' '); // reset to no direction
 				// update time and repaint
 				time++;
 				score++;
 				if (time % produceTime == 0) {
-					Monster baby = new Monster(grid, player, firstMonsterCell.row, firstMonsterCell.col);
+					Monster baby = new Monster(grid, player, MonstersCell.get(0).row, MonstersCell.get(0).col);
 					baby.isBaby = true;
 					monsters.add(baby);
 				}
@@ -151,7 +153,7 @@ public class Game extends JFrame {
 				boardPanel.repaint();
 			} else
 				check = false;
-			
+
 		} while (time < timeAllowed && check && player.isReady());
 		message = time < timeAllowed ? "Player Lost" : "Player Won"; // players has been eaten up
 		userData.saveScore(score);
