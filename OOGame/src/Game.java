@@ -141,11 +141,18 @@ public class Game extends JFrame {
 				// update time and repaint
 				time++;
 				score++;
+				
 				if (time % produceTime == 0) {
 					Monster baby = new Monster(grid, player, MonstersCell.get(0).row, MonstersCell.get(0).col);
 					baby.isBaby = true;
 					monsters.add(baby);
 				}
+				for (int i = 1; i < monsters.size(); ++i) {
+					if (monsters.get(i).isBaby() && monsters.get(i).getCell() == newPlayerCell) {
+						monsters.remove(i);
+					}
+				}
+				
 				energyLabel.setText("Energy : " + player.getEnergy());
 				scoreLabel.setText("Score : " + score);
 				timeLabel.setText("Time Remaining : " + (timeAllowed - time));
