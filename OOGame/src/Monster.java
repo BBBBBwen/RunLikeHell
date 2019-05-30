@@ -16,6 +16,7 @@ public class Monster extends Moveable {
 		setCell(grid.getCell(row, col));
 	}
 
+	// check if it's baby monster
 	public boolean isBaby() {
 		return isBaby;
 	}
@@ -52,7 +53,8 @@ public class Monster extends Moveable {
 		return currentCell;
 	}
 
-	public boolean viewable() // can be used for hiding
+	// check if monster needs to be hidden
+	public boolean viewable()
 	{
 		Cell p = player.getCell();
 		Cell m = currentCell;

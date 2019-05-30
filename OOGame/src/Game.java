@@ -121,6 +121,7 @@ public class Game extends JFrame {
 		boardPanel.repaint();
 	}
 
+	// Game Run
 	public String play() throws Exception {
 		int time = 0;
 		boolean check = true;

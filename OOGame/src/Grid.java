@@ -11,6 +11,7 @@ public class Grid {
 	private Cell road[];//////////// roads
 	private Cell map[][];///////// whole map
 
+	// Set difficulty
 	public Grid(int difficulty) {
 		this.multiplier = difficulty;
 		this.roadSize = (2 + multiplier) * (10 + 9 * multiplier);

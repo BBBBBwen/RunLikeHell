@@ -50,6 +50,7 @@ public class Player extends Moveable {
 		return currentCell;
 	}
 
+	// keypress count for moving multiple cells
 	public int getPresses() {
 		return presses;
 	}
@@ -70,6 +71,7 @@ public class Player extends Moveable {
 		return traps;
 	}
 
+	// eating nougats
 	public void eat() {
 		energy += 6;
 	}

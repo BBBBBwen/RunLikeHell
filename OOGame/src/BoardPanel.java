@@ -21,6 +21,7 @@ public class BoardPanel extends JPanel implements KeyListener {
 
 	}
 
+	// reset game
 	public void reset(Grid grid, Player player, ArrayList<Monster> monsters) {
 		this.player = player;
 		this.grid = grid;
