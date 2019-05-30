@@ -1,36 +1,37 @@
 
 public class Trap {
-	private int xCor, yCor, timeRemain;
+	private Cell currentCell;
+	private Grid grid;
+	private int timeRemain;
 	private boolean active;
-	
-	public Trap(int xCor, int yCor) {
-		this.xCor = xCor;
-		this.yCor = yCor;
+
+	public Trap(Grid g, int row, int col) throws Exception {
+		currentCell = grid.getCell(row, col);
 		active = true;
 		timeRemain = 10;
 	}
-	
-	public int getX() {
-		return xCor;
-	}
 
-	public int getY() {
-		return yCor;
-	}
-	
 	public int getTime() {
 		return timeRemain;
 	}
-	
+
 	public boolean getState() {
 		return active;
 	}
-	
+
 	public void decTime() {
 		timeRemain -= 1;
 	}
-	
+
 	public void deactivate() {
 		active = false;
+	}
+
+	public void setCell(Cell c) {
+		currentCell = c;
+	}
+
+	public Cell getCell() {
+		return currentCell;
 	}
 }

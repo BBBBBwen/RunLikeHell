@@ -1,27 +1,27 @@
 
 public class Nougat {
-	private int xCor, yCor;
+	private Cell currentCell;
+	private Grid grid;
 	private boolean notEaten = true;
-	
-	public Nougat (int xCor, int yCor) {
-		this.xCor = xCor;
-		this.yCor = yCor;
+
+	public Nougat(Grid g, int row, int col) throws Exception {
+		currentCell = grid.getCell(row, col);
 	}
-	
-	public int getX() {
-		return xCor;
-	}
-	
-	public int getY() {
-		return yCor;
-	}
-	
+
 	public boolean getState() {
 		return notEaten;
 	}
-	
+
 	public void eaten() {
 		notEaten = false;
+	}
+
+	public void setCell(Cell c) {
+		currentCell = c;
+	}
+
+	public Cell getCell() {
+		return currentCell;
 	}
 
 }

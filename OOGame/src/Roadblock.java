@@ -1,21 +1,14 @@
 
 public class Roadblock {
-	private int xCor, yCor, health;
+	private Cell currentCell;
+	private Grid grid;
+	private int health;
 	private boolean active;
 
-	public Roadblock(int xCor, int yCor) {
-		this.xCor = xCor;
-		this.yCor = yCor;
+	public Roadblock(Grid g, int row, int col) throws Exception {
+		currentCell = grid.getCell(row, col);
 		this.health = 4;
 		active = true;
-	}
-
-	public int getX() {
-		return xCor;
-	}
-
-	public int getY() {
-		return yCor;
 	}
 
 	public int getHealth() {
@@ -29,9 +22,17 @@ public class Roadblock {
 	public void healthDec() {
 		health -= 1;
 	}
-	
+
 	public void deactivate() {
 		active = false;
+	}
+
+	public void setCell(Cell c) {
+		currentCell = c;
+	}
+
+	public Cell getCell() {
+		return currentCell;
 	}
 
 }
