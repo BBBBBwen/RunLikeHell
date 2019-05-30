@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class UserData {
 	private ArrayList<User> users = new ArrayList<User>();
 	private User currentUser;
-	private File file = new File("data.txt");
+	private File file = new File("data.save");
 	private boolean isLogin = false;
 
 	public UserData() {
